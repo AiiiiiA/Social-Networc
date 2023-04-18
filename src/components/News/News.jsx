@@ -1,7 +1,7 @@
 const News = (props) => {
     return (
         <div>
-            ЛЕНТА НОВОСТЕЙ
+            ЛЕНТА
         </div>
     )
 }
