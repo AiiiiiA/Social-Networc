@@ -1,0 +1,20 @@
+.header {
+  grid-area: h;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  border-bottom: solid 1px gray;
+  height: 90px;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+.FriengsForever {
+  display: flex;
+  margin-left: 30px;
+  align-items: center;
+}
+
+.loginBlock {
+  margin-right: 30px;
+}

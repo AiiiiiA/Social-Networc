@@ -1,0 +1,26 @@
+.nav {
+    grid-area: n;
+    background-color: rgba(128, 128, 128, 0.199);
+    padding: 40px 20px;
+    font-size: 16px;
+    line-height: 2.5;
+    border-right: solid 1px gray;
+}
+
+svg {
+    width: 30px;
+    height: 30px;
+}
+
+.navItem a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+.navItem a:hover {
+    background-color: rgba(0, 0, 0, 0.185);
+    transition: all 0.2s linear;
+    border-radius: 7px;
+}
