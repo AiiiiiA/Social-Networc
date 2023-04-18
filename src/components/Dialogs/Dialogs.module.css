@@ -1,0 +1,23 @@
+.messageBox {
+    display: flex;
+    padding: 20px;
+}
+
+.messages {
+    margin-left: 100px;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    padding: 0 40px;
+    font-size: 20px;
+}
+
+.link img {
+    margin-right: 40px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}

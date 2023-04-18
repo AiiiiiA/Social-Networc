@@ -1,0 +1,24 @@
+.profileWindow {
+    margin: 5%;
+    display: flex;
+    align-items:center;
+    background-color: white;
+    border: solid 1px gray;
+    border-radius: 5px;
+}
+
+.avatar {
+    width: 210px;
+    height: 200px;
+    border: 10px solid white;
+    border-radius: 50%;
+}
+
+.prfInfo {
+    width: 100%;
+    padding-left:5% ;
+}
+
+.name {
+    margin-bottom: 3px;
+}
