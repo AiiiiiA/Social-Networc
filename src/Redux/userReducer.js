@@ -1,16 +1,16 @@
 import { usersAPI, profileAPI } from '../api/api';
 
-const FOLLOW = 'my-app/user/FOLLOW';
-const UN_FOLLOW = 'my-app/user/UN_FOLLOW';
-const SET_USERS_DATA = 'my-app/user/SET_USERS_DATA';
-const SET_PAGE = 'my-app/user/SET_PAGE';
-const SET_TOTAL_USERS = 'my-app/user/SET_TOTAL_USERS';
-const TOGGLE_IS_FETCHING = 'my-app/user/TOGGLE_IS_FETCHING';
-const SET_PROFILE = 'my-app/user/SET_PROFILE';
-const TOGGLE_FOLLOWING_IN_PROGRESS = 'my-app/user/TOGGLE_FOLLOWING_IN_PROGRESS';
-const SET_CURRENT_PORTION = 'SET_CURRENT_PORTION';
-
-const SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
+const FOLLOW = 'my-app/FOLLOW';
+const UN_FOLLOW = 'my-app/UN_FOLLOW';
+const SET_USERS_DATA = 'my-app/SET_USERS_DATA';
+const SET_PAGE = 'my-app/SET_PAGE';
+const SET_TOTAL_USERS = 'my-app/SET_TOTAL_USERS';
+const TOGGLE_IS_FETCHING = 'my-app/TOGGLE_IS_FETCHING';
+const SET_PROFILE = 'my-app/SET_PROFILE';
+const TOGGLE_FOLLOWING_IN_PROGRESS = 'my-app/TOGGLE_FOLLOWING_IN_PROGRESS';
+const SET_CURRENT_PORTION = 'my-app/SET_CURRENT_PORTION';
+const SET_PHOTO = 'my-app/SET_PHOTO';
+const SET_SELECTED_PAGE = 'my-app/SET_SELECTED_PAGE';
 
 let inicialState = {
     usersData: null,
@@ -108,6 +108,12 @@ const userReducer = (state = inicialState, action) => {
                 }
             }
 
+        case SET_PHOTO:
+            return {
+                ...state,
+                profileData: { ...state.profileData, photos: action.photo }
+            }
+
         default:
             return state;
     }
@@ -121,6 +127,14 @@ export const setIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetc
 export const setProfile = (profileData) => ({ type: SET_PROFILE, profileData })
 export const toggleFollowingInProgress = (isFetching, id) => ({ type: TOGGLE_FOLLOWING_IN_PROGRESS, isFetching, id })
 export const setSelectedPage = (currentPage, currentPortion) => ({ type: SET_SELECTED_PAGE, currentPage, currentPortion })
+export const setPhoto = (photo) => ({ type: SET_PHOTO, photo })
+
+export const uploadProfilePhoto = (photo) => async (dispatch) => {
+    let data = await usersAPI.setPhoto(photo);
+    if (data.data.resultCode === 0) {
+        dispatch(setPhoto(photo))
+    }
+}
 
 export const requestUsers = (page, pageSize) => async (dispath) => {
     dispath(setIsFetching(true));
