@@ -18,6 +18,12 @@ export const usersAPI = {
 
     unfollow(id) {
         return instance.delete(`follow/${id}`).then(response => response.data);
+    },
+    setPhoto(photo) {
+        const formData = new FormData();
+        formData.append('image', photo)
+
+        return instance.put(`profile/photo`, formData, { photo })
     }
 }
 

@@ -1,8 +1,8 @@
 import { profileAPI } from "../api/api";
 
-const ADD_POST = 'my-app/profile/ADD-POST';
-const DELETE_POST = 'my-app/profileDELETE_POST';
-const SET_STATUS = 'my-app/profileSET_STATUS';
+const ADD_POST = 'my-app/profile/profile_ADD-POST';
+const DELETE_POST = 'my-app/profile_DELETE_POST';
+const SET_STATUS = 'my-app/profile_SET_STATUS';
 
 let inicialState = {
 
@@ -13,7 +13,6 @@ let inicialState = {
         { id: 4, message: 'Это мой 3 пост!', likesCount: '2' },
         { id: 5, message: 'Это мой 4 пост!', likesCount: '23' }
     ],
-
     status: ''
 }
 
@@ -61,5 +60,6 @@ export const updateUserStatus = (status) => async (dispatch) => {
         dispatch(setStatus(status))
     }
 };
+
 /* добавить кнопку удаления поста */
 export default profileReducer;
