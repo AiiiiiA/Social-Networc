@@ -31,6 +31,36 @@ export const profileAPI = {
     profile(userId) {
         return instance.get(`profile/` + userId).then(response => response.data)
     },
+    changeProfileInfo(lookingForAJob,
+        lookingForAJobDescription,
+        fullName,
+        aboutMe,
+        contacts,
+        github,
+        vk,
+        facebook,
+        instagram,
+        twitter,
+        website,
+        youtube,    
+        mainLink) {
+        return instance.put(`profile`, {
+            lookingForAJob,
+            lookingForAJobDescription,
+            fullName,
+            aboutMe,
+            contacts: {
+                github,
+                vk,
+                facebook,
+                instagram,
+                twitter,
+                website,
+                youtube,
+                mainLink
+            }
+        }).then(response => response.data)
+    },
     getStatus(userId) {
         return instance.get(`profile/status/` + userId)
     },

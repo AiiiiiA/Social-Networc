@@ -8,6 +8,7 @@ import { compose } from 'redux';
 import { getProfileData } from '../../Redux/usersSelectors';
 import { getStatus } from '../../Redux/profileSelectors';
 import { getAuthId } from '../../Redux/authSelectors';
+import { withAuthRedirect } from '../../hoc/WithAuthRedirect';
 
 const ProfileContainer = (props) => {
 
@@ -38,5 +39,6 @@ export default compose(
         getUserStatus,
         updateUserStatus
     }),
-    withRouter
+    withRouter,
+    withAuthRedirect
 )(ProfileContainer)

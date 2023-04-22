@@ -9,6 +9,8 @@ import React from 'react';
 import Friends from './Friends/Friends';
 import Preloader from '../common/preloader/Preloader';
 import { useEffect } from "react";
+import { compose } from "redux";
+import { withAuthRedirect } from "../../hoc/WithAuthRedirect";
 
 const FriendsContainer = (props) => {
 
@@ -47,6 +49,9 @@ let mapStateToProps = (state) => (
     }
 )
 
-export default connect(mapStateToProps, {
-    requestUsers, following, unfollowing, setSelectedPage
-})(FriendsContainer);
+export default compose(
+    connect(mapStateToProps, {
+        requestUsers, following, unfollowing, setSelectedPage
+    }),
+    withAuthRedirect
+)(FriendsContainer);
