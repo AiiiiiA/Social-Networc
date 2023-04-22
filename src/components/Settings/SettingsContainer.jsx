@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { withRouter } from '../../hoc/withRouter';
 import { compose } from 'redux';
-import { uploadProfilePhoto } from '../../Redux/userReducer';
+import { uploadProfilePhoto, onChangeProfileData } from '../../Redux/userReducer';
+import { withAuthRedirect } from '../../hoc/WithAuthRedirect';
 
 import Settings from './Settings';
 
@@ -9,7 +9,8 @@ const SettingsContainer = (props) => {
 
     return (
         <Settings
-        uploadProfilePhoto = {props.uploadProfilePhoto}
+            uploadProfilePhoto={props.uploadProfilePhoto}
+            onChangeProfileData={props.onChangeProfileData}
         />
     )
 }
@@ -19,7 +20,8 @@ let mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {
-        uploadProfilePhoto
+        uploadProfilePhoto,
+        onChangeProfileData
     }),
-    withRouter
+    withAuthRedirect
 )(SettingsContainer)

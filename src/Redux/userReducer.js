@@ -129,6 +129,40 @@ export const toggleFollowingInProgress = (isFetching, id) => ({ type: TOGGLE_FOL
 export const setSelectedPage = (currentPage, currentPortion) => ({ type: SET_SELECTED_PAGE, currentPage, currentPortion })
 export const setPhoto = (photo) => ({ type: SET_PHOTO, photo })
 
+export const onChangeProfileData = (
+    lookingForAJob,
+    lookingForAJobDescription,
+    fullName,
+    aboutMe,
+    contacts,
+   contacts.github,
+   contacts.vk,
+    contacts.facebook,
+    contacts.instagram,
+    contacts.twitter,
+    contacts.website,
+    contacts.youtube,
+    contacts.mainLink) => async (dispatch) => {
+        let data = await profileAPI.changeProfileInfo(
+            lookingForAJob,
+            lookingForAJobDescription,
+            fullName,
+            aboutMe,
+            contacts.github,
+            contacts.vk,
+            contacts.facebook,
+            contacts.instagram,
+            contacts.twitter,
+            contacts.website,
+            contacts.youtube,
+            contacts.mainLink);
+        if (data.resultCode === 0) {
+            console.log('все заебись')
+        } else {
+            console.log('все не заебись');
+        }
+    }
+
 export const uploadProfilePhoto = (photo) => async (dispatch) => {
     let data = await usersAPI.setPhoto(photo);
     if (data.data.resultCode === 0) {
