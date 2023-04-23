@@ -30,6 +30,7 @@ class App extends React.Component {
     return (
       <div className='app-wrapper'>
         <HeaderContainer />
+
         <NavContainer />
 
         <Suspense fallback={<div><Preloader /></div>}>
@@ -45,7 +46,7 @@ class App extends React.Component {
           </Routes>
 
         </Suspense>
-      </div>
+        </div>
     )
   }
 }

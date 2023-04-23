@@ -1,11 +1,25 @@
 .postSpace {
-    margin: 0 10%;
+    margin-top: 20px;
 }
 
 .newPost {
-    margin: 3%;
+    background-color: white;
+    border: solid 1.5px #9A84A4;
+    border-radius: 5px;
+}
+
+.postBox {
+    margin-top: 20px;
+}
+
+.postBox h3 {
+    padding: 20px;
+    background-color: white;
+    border: solid 1.5px #9A84A4;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .posts {
-    margin: 3%;
+    margin: 0;
 }

@@ -1,6 +1,6 @@
 import { Field, reduxForm, reset } from "redux-form";
 import { required, maxLengthCreator } from '../../../../utils/validators/validators';
-import { Textarea } from '../../../common/FormsControls/FormControls';
+import { Input } from '../../../common/FormsControls/FormControls';
 
 const afterSubmit = (result, dispatch) =>
     dispatch(reset('post'));
@@ -11,7 +11,7 @@ const addPostForm = (props) => (
     <form onSubmit={props.handleSubmit}>
         <div>
             <Field
-                component={Textarea}
+                component={Input}
                 name='post'
                 placeholder='Что у вас нового?'
                 validate={[required, maxLegth30]}

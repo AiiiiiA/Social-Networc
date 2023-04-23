@@ -19,12 +19,13 @@ const MyPosts = React.memo((props) => {
 
     return (
         <div className={s.postSpace}>
-            <h3> Мои посты </h3>
+
             <div className={s.newPost}>
-                <h4>Новый пост</h4>
                 <PostReduxForm onSubmit={onSubmit} />
             </div>
-            <div>
+            
+            <div className={s.postBox} >
+                <h3> Мои записи </h3>
                 <div className={s.posts}>
                     {postsElement}
                 </div>
