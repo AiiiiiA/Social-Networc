@@ -1,6 +1,15 @@
 .rememberMe {
-display: flex;
+    display: flex;
 }
-.rememberMe p{
-margin-left: 5px;
+
+.rememberMe p {
+    margin-left: 5px;
+}
+
+.contactsBox {}
+
+.contacts {
+    display: flex;
+    justify-content: space-between;
+    margin: 7px auto;
 }

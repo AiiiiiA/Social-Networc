@@ -1,7 +1,7 @@
 import Profile from './Profile';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { setProfile, setProfilePage } from "../../Redux/userReducer";
+import { setProfile, setProfilePage, onChangeProfileData } from "../../Redux/userReducer";
 import { getUserStatus, updateUserStatus } from '../../Redux/profileReducer';
 import { withRouter } from '../../hoc/withRouter';
 import { compose } from 'redux';
@@ -22,6 +22,7 @@ const ProfileContainer = (props) => {
             profileData={props.profileData}
             status={props.status}
             updateUserStatus={props.updateUserStatus}
+            onChangeProfileData={props.onChangeProfileData}
         />
     )
 }
@@ -37,7 +38,8 @@ export default compose(
         setProfile,
         setProfilePage,
         getUserStatus,
-        updateUserStatus
+        updateUserStatus,
+        onChangeProfileData
     }),
     withRouter,
     withAuthRedirect
