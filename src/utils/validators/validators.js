@@ -3,7 +3,7 @@ export const required = value => {
         return undefined
     }
 
-    return 'Пустой текст';
+    return 'Поле обязательно для заполнения';
 }
 
 export const maxLengthCreator = (maxLength) => (value) => {
