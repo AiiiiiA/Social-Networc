@@ -1,20 +1,76 @@
 .header {
   grid-area: h;
+
   background-color: white;
+
   display: flex;
   align-items: center;
-  border-bottom: solid 1px gray;
-  height: 90px;
   justify-content: space-between;
-  font-size: 20px;
+
+  height: 6vh;
+  padding: 0 15vw;
+
+  border-bottom: solid 1.5px #9A84A4;
 }
 
-.FriengsForever {
+.logo {
   display: flex;
-  margin-left: 30px;
   align-items: center;
+  font-size: 18px;
 }
 
-.loginBlock {
-  margin-right: 30px;
+.logoPicture {
+  width: 40px;
+  height: 40px;
+  fill: rgba(154, 132, 164, 0.185);
+  stroke: #9A84A4;
+}
+
+/* Кнопка выпадающего списка */
+.dropbtn {
+  background-color: #9A84A4;
+  color: white;
+  padding: 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Изменение цвета фона кнопки раскрывающегося списка при отображении содержимого раскрывающегося списка */
+.dropdown:hover .dropbtn {
+  background-color: #745D7E
+}
+
+/* Контейнер <div> - необходим для размещения выпадающего содержимого */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Выпадающее содержимое (скрыто по умолчанию) */
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Ссылки внутри выпадающего списка */
+.dropdownContent a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Изменение цвета выпадающих ссылок при наведении курсора */
+.dropdownContent a:hover {
+  background-color: #ddd;
+}
+
+/* Показать выпадающее меню при наведении курсора */
+.dropdown:hover .dropdownContent {
+  display: block;
 }

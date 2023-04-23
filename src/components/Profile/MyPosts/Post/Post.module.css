@@ -1,7 +1,12 @@
 .item {
-    margin: 10px auto;
+    margin-bottom:20px ;
+    padding: 10px;
     display: flex;
     align-items: center;
+
+    background-color: white;
+    border: solid 1.5px #9A84A4;
+    border-radius: 5px;
 }
 
 .item p {
