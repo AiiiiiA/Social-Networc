@@ -1,11 +1,12 @@
 .postSpace {
-    margin-top: 20px;
+    margin-top: 20px; 
 }
 
 .newPost {
-    background-color: white;
-    border: solid 1.5px #9A84A4;
+    border: solid 3px #9A84A4;
     border-radius: 5px;
+    padding: 10px;
+    display: flex;
 }
 
 .postBox {
