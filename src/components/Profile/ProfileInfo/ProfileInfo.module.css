@@ -1,24 +1,41 @@
 .profileWindow {
-    padding: 20px 5%;
+    padding: 20px;
     display: flex;
-    align-items:center;
-    background-color: white;
-    border: solid 1.5px #9A84A4;
+    align-items: center;
+    border: solid 3px #9A84A4;
     border-radius: 5px;
 }
 
 .avatar {
-    width: 210px;
-    height: 200px;
-    border: 10px solid white;
+    width: 225px;
+    height: 225px;
+    border: 3px solid #9A84A4;
     border-radius: 50%;
 }
 
 .prfInfo {
     width: 100%;
-    padding-left:5% ;
+    padding-left: 5%;
 }
 
 .name {
-    margin-bottom: 3px;
+    font-size: 40px;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.changeProfile {
+    cursor: pointer;
+    color: #9A84A4;
+}
+
+.status {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.aboutMe {
+    margin-top: 20px;
 }

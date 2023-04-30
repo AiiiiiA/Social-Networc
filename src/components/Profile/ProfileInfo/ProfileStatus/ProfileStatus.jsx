@@ -28,20 +28,20 @@ const ProfileStatus = (props) => {
     return (
         <div>
             {!editMode
-                ? <div>
-                    <span onClick={activateEditMode} >
-                        {props.status || '------'}
-                    </span>
-                </div>
-                : <div>
-                    <input
-                        onChange={onStatusChange}
-                        value={status}
-                        autoFocus={true}
-                        onBlur={deActivateEditMode}
-                        placeholder='Введите ваш статус'
-                    />
-                </div>}
+                ?
+                <span className={s.status} onClick={activateEditMode} >
+                    {props.status || '------'}
+                </span>
+
+                :
+                <input
+                    onChange={onStatusChange}
+                    value={status}
+                    autoFocus={true}
+                    onBlur={deActivateEditMode}
+                    placeholder='Введите ваш статус'
+                />
+            }
         </div>
     )
 }
