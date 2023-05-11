@@ -6,8 +6,7 @@ import style from '../../common/FormsControls/FormControls.module.css'
 
 const maxLegth30 = maxLengthCreator(30);
 
-const LoginForm = ({ handleSubmit, error }) => {
-
+const LoginForm = ({ handleSubmit, error, captchaURL, getNewCaptcha }) => {
     return (
         <form onSubmit={handleSubmit} >
             <div>
@@ -41,6 +40,18 @@ const LoginForm = ({ handleSubmit, error }) => {
                     {error}
                 </div>
             }
+
+            {captchaURL &&
+                <div>
+                    <img src={captchaURL} />
+                    <Field
+                        component={Input}
+                        name='captcha'
+                        placeholder='Введите текст с картинки'
+                        validate={[required]}
+                    />
+                    <button onClick={getNewCaptcha}>Обновить картинку</button>
+                </div>}
 
             <div>
                 <button>Войти</button>

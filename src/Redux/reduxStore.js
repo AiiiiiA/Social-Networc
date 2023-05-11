@@ -2,10 +2,10 @@ import { combineReducers, legacy_createStore, legacy_createStore as createStore,
 import profileReducer from './profileReducer';
 import messageReducer from './messageReducer';
 import userReducer from './userReducer'
-import authReducer from './authReducer';
+import authReducer from './authReducer.ts';
 import thunkMiddleware from 'redux-thunk'
 import { reducer as formReducer } from 'redux-form'
-import appReducer from './appReducer';
+import appReducer from './appReducer.ts';
 
 import { compose } from 'redux';
 

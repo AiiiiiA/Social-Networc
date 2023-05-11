@@ -4,6 +4,14 @@ import { stopSubmit } from "redux-form";
 const SET_USER_DATA = 'my-app/auth/SET_USER_DATA';
 const GET_CAPTCHA_URL = 'my-app/auth/GET_CAPTCHA_URL';
 
+export type InitialStateType = {
+    id: null | number,
+    email: null | number,
+    login: null | number,
+    isAuth: false | boolean,
+    captchaURL: null | number
+}
+
 let inicialState = {
     id: null,
     email: null,
@@ -12,7 +20,7 @@ let inicialState = {
     captchaURL: null
 }
 
-const authReducer = (state = inicialState, action) => {
+const authReducer = (state = inicialState, action: any): InitialStateType => {
 
     switch (action.type) {
 
@@ -42,7 +50,7 @@ export const setCaptchaURL = (captchaURL) => ({
     type: GET_CAPTCHA_URL, captchaURL
 })
 
-export const authorization = () => async (dispatch) => {
+export const authorization = () => async (dispatch: any) => {
     const data = await authAPI.auth();
     if (data.resultCode === 0) {
         const { id, email, login } = data.data;
@@ -50,12 +58,17 @@ export const authorization = () => async (dispatch) => {
     }
 }
 
-export const login = (email, password, rememberMe) => async (dispatch) => {
-    const data = await authAPI.login(email, password, rememberMe);
+export const login = (email, password, rememberMe, captcha) => async (dispatch) => {
+    const data = await authAPI.login(email, password, rememberMe, captcha);
+
     if (data.resultCode === 0) {
-        
+
         dispatch(authorization())
+
     } else {
+
+        dispatch(getCaptchaURL())
+
         const message = data.messages.length > 0 ? 'Неправильный email или пароль' : 'Some error'
         dispatch(stopSubmit('login', { _error: message }));
     }
