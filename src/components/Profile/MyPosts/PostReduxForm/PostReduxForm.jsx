@@ -15,7 +15,7 @@ const addPostForm = (props) => (
                 component={Input}
                 name='post'
                 placeholder='Что у вас нового?'
-                validate={[required, maxLegth30]}
+                validate={[ maxLegth30]}
             />
         </div>
         <div>
