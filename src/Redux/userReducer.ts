@@ -1,4 +1,5 @@
 import { usersAPI, profileAPI } from '../api/api';
+import { ProfileDataType, PhotoType, UsersDataType } from '../types/types';
 
 const FOLLOW = 'my-app/FOLLOW';
 const UN_FOLLOW = 'my-app/UN_FOLLOW';
@@ -12,8 +13,10 @@ const SET_CURRENT_PORTION = 'my-app/SET_CURRENT_PORTION';
 const SET_PHOTO = 'my-app/SET_PHOTO';
 const SET_SELECTED_PAGE = 'my-app/SET_SELECTED_PAGE';
 
+type InicialStateType = typeof inicialState
+
 let inicialState = {
-    usersData: null,
+    usersData: [] as Array<UsersDataType>,
     pageSize: 5,
 
     portionSize: 10,
@@ -28,11 +31,11 @@ let inicialState = {
 
     totalUsers: 0,
     isFetching: true,
-    profileData: null,
-    followingInProgress: []
+    profileData: null as ProfileDataType | null,
+    followingInProgress: [] as Array<number>
 };
 
-const userReducer = (state = inicialState, action) => {
+const userReducer = (state = inicialState, action: any) => {
 
     switch (action.type) {
 
@@ -119,17 +122,34 @@ const userReducer = (state = inicialState, action) => {
     }
 }
 
-export const follow = (userId) => ({ type: FOLLOW, userId })
-export const unfollow = (userId) => ({ type: UN_FOLLOW, userId })
-export const setUsers = (usersData) => ({ type: SET_USERS_DATA, usersData })
-export const setTotalUsers = (totalUsers) => ({ type: SET_TOTAL_USERS, totalUsers })
-export const setIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
-export const setProfile = (profileData) => ({ type: SET_PROFILE, profileData })
-export const toggleFollowingInProgress = (isFetching, id) => ({ type: TOGGLE_FOLLOWING_IN_PROGRESS, isFetching, id })
-export const setSelectedPage = (currentPage, currentPortion) => ({ type: SET_SELECTED_PAGE, currentPage, currentPortion })
-export const setPhoto = (photo) => ({ type: SET_PHOTO, photo })
+type FollowAT = { type: typeof FOLLOW, userId: number }
+export const follow = (userId: number): FollowAT => ({ type: FOLLOW, userId })
 
-export const onChangeProfileData = (profile) => async (dispatch, getState) => {
+type UnfollowAT = { type: typeof UN_FOLLOW, userId: number }
+export const unfollow = (userId: number): UnfollowAT => ({ type: UN_FOLLOW, userId })
+
+type SetUsersAT = { type: typeof SET_USERS_DATA, usersData: UsersDataType }
+export const setUsers = (usersData: UsersDataType): SetUsersAT => ({ type: SET_USERS_DATA, usersData })
+
+type SetTotalUsersAT = { type: typeof SET_TOTAL_USERS, totalUsers: number }
+export const setTotalUsers = (totalUsers: number): SetTotalUsersAT => ({ type: SET_TOTAL_USERS, totalUsers })
+
+type SetIsFetchingAT = { type: typeof TOGGLE_IS_FETCHING, isFetching: boolean }
+export const setIsFetching = (isFetching: boolean): SetIsFetchingAT => ({ type: TOGGLE_IS_FETCHING, isFetching })
+
+type SetProfileAT = { type: typeof SET_PROFILE, profileData: ProfileDataType }
+export const setProfile = (profileData: ProfileDataType): SetProfileAT => ({ type: SET_PROFILE, profileData })
+
+type ToggleFollowingInProgressAT = { type: typeof TOGGLE_FOLLOWING_IN_PROGRESS, isFetching: boolean, id: number }
+export const toggleFollowingInProgress = (isFetching: boolean, id: number): ToggleFollowingInProgressAT => ({ type: TOGGLE_FOLLOWING_IN_PROGRESS, isFetching, id })
+
+type SetSelectedPageAT = { type: typeof SET_SELECTED_PAGE, currentPage: number, currentPortion: number }
+export const setSelectedPage = (currentPage: number, currentPortion: number): SetSelectedPageAT => ({ type: SET_SELECTED_PAGE, currentPage, currentPortion })
+
+type SetPhotoAT = { type: typeof SET_PHOTO, photo: PhotoType }
+export const setPhoto = (photo: PhotoType) => ({ type: SET_PHOTO, photo })
+
+export const onChangeProfileData = (profile: ProfileDataType) => async (dispatch: any, getState: any) => {
 
     let userID = getState().auth.id
     let data = await profileAPI.changeProfileInfo(profile);
@@ -140,14 +160,14 @@ export const onChangeProfileData = (profile) => async (dispatch, getState) => {
     }
 }
 
-export const uploadProfilePhoto = (photo) => async (dispatch) => {
+export const uploadProfilePhoto = (photo: PhotoType) => async (dispatch: any) => {
     let data = await usersAPI.setPhoto(photo);
     if (data.data.resultCode === 0) {
         dispatch(setPhoto(photo))
     }
 }
 
-export const requestUsers = (page, pageSize) => async (dispath) => {
+export const requestUsers = (page: number, pageSize: number) => async (dispath: any) => {
     dispath(setIsFetching(true));
     let data = await usersAPI.getUsers(page, pageSize);
     dispath(setIsFetching(false));
@@ -155,17 +175,17 @@ export const requestUsers = (page, pageSize) => async (dispath) => {
     dispath(setTotalUsers(data.totalCount));
 };
 
-export const following = (id) => async (dispath) => {
+export const following = (id: number) => async (dispath: any) => {
 
     followUnfollowFlow(dispath, usersAPI.follow.bind(usersAPI), follow, id);
 };
 
-export const unfollowing = (id) => async (dispath) => {
+export const unfollowing = (id: number) => async (dispath: any) => {
 
     followUnfollowFlow(dispath, usersAPI.unfollow.bind(usersAPI), unfollow, id);
 };
 
-export const followUnfollowFlow = async (dispath, apiMethod, actionCreator, id) => {
+export const followUnfollowFlow = async (dispath: any, apiMethod: any, actionCreator: any, id: number) => {
     dispath(toggleFollowingInProgress(true, id));
     let data = await apiMethod(id);
     if (data.resultCode === 0) {
@@ -174,7 +194,7 @@ export const followUnfollowFlow = async (dispath, apiMethod, actionCreator, id) 
     dispath(toggleFollowingInProgress(false, id));
 }
 
-export const setProfilePage = (userId) => async (dispatch) => {
+export const setProfilePage = (userId: number) => async (dispatch: any) => {
     let data = await profileAPI.profile(userId)
     dispatch(setProfile(data))
 }

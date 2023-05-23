@@ -1,16 +1,11 @@
 import { profileAPI } from "../api/api";
+import { PostDataType } from "../types/types";
 
 const ADD_POST = 'my-app/profile/profile_ADD-POST';
 const DELETE_POST = 'my-app/profile_DELETE_POST';
 const SET_STATUS = 'my-app/profile_SET_STATUS';
 
 type InicialStateType = typeof inicialState
-
-type PostDataType = {
-    id: number,
-    message: string,
-    likesCount: number
-}
 
 let inicialState = {
 
