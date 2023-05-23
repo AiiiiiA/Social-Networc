@@ -2,12 +2,9 @@ import { authorization } from './authReducer'
 
 const INITIALIZED_SUCCESS = 'my-app/app/INITIALIZED_SUCCESS';
 
-export type InitialStateType = {
-    initialized: boolean
-}
+type InitialStateType = typeof inicialState
 
-
-let inicialState: InitialStateType = {
+let inicialState = {
     initialized: false
 }
 

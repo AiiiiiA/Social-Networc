@@ -1,9 +1,17 @@
-import s from './User.module.css';
-import React from 'react';
+import s from './User.module.css'
+import { FC } from 'react'
 import userImg from '../../../../assets/images/userImage.png'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import { UsersDataType } from '../../../../types/types'
 
-const User = ({ user, followingInProgress, unfollowing, following }) => {
+type UserProps = {
+    user: UsersDataType
+    followingInProgress: Array<number>
+    unfollowing: (id: number) => void
+    following: (id: number) => void
+}
+
+const User: FC<UserProps> = ({ user, followingInProgress, unfollowing, following }) => {
 
     return (
 
@@ -55,4 +63,4 @@ const User = ({ user, followingInProgress, unfollowing, following }) => {
     )
 }
 
-export default User;
+export default User 

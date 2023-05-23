@@ -1,1 +1,0 @@
-export const getMessageData = (state) => (state.message.messagesData);

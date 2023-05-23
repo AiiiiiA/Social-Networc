@@ -29,7 +29,7 @@ let inicialState = {
     ] as Array<MessageType>
 }
 
-const messageReducer = (state = inicialState, action: any) => {
+const messageReducer = (state = inicialState, action: any): InitialStateType => {
 
     switch (action.type) {
 

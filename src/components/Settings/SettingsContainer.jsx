@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { onChangeProfileData } from '../../Redux/userReducer';
+import { onChangeProfileData } from '../../Redux/profileReducer';
 import { withAuthRedirect } from '../../hoc/WithAuthRedirect';
 
 import Settings from './Settings';
