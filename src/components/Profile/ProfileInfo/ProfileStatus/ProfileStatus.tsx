@@ -1,14 +1,25 @@
 import s from '../ProfileInfo.module.css'
 import React, { useEffect, useState } from 'react';
+import { FC } from 'react'
 
-const ProfileStatus = (props) => {
+type Props = {
+    status: string,
+    updateUserStatus: (status: string) => void
+}
+
+type State = {
+    editMode: boolean,
+    status: string
+}
+
+const ProfileStatus: FC<Props> = ({ status, updateUserStatus }) => {
 
     let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status);
+    let [localStatus, setLocalStatus] = useState(status);
 
     useEffect(() => {
-        setStatus(props.status)
-    }, [props.status])
+        setLocalStatus(status)
+    }, [status])
 
     const activateEditMode = () => {
         setEditMode(true)
@@ -16,13 +27,13 @@ const ProfileStatus = (props) => {
 
     const deActivateEditMode = () => {
         setEditMode(false)
-        if (status != props.status) {
-            props.updateUserStatus(status)
+        if (status != status) {
+            updateUserStatus(status)
         }
     }
 
-    const onStatusChange = (e) => {
-        setStatus(e.currentTarget.value)
+    const onStatusChange = (e:any) => {
+        setLocalStatus(e.currentTarget.value)
     }
 
     return (
@@ -30,7 +41,7 @@ const ProfileStatus = (props) => {
             {!editMode
                 ?
                 <span className={s.status} onClick={activateEditMode} >
-                    {props.status || '------'}
+                    {status || '------'}
                 </span>
 
                 :

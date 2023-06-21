@@ -1,7 +1,7 @@
 import Preloader from '../../common/preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import userImg from '../../../assets/images/userImage.png';
-import ProfileStatus from './ProfileStatus/ProfileStatus.jsx';
+import ProfileStatus from './ProfileStatus/ProfileStatus.tsx';
 import { useState } from 'react';
 import ChangeProfileReduxForm from './ChangeProfileReduxForm/ChangeProfileReduxForm';
 

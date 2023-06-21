@@ -1,3 +1,4 @@
+import { Dispatch } from 'react';
 import { usersAPI } from '../api/api';
 import { UsersDataType } from '../types/types';
 
@@ -32,7 +33,7 @@ let inicialState = {
     followingInProgress: [] as Array<number>
 };
 
-const userReducer = (state = inicialState, action: any): InicialStateType => {
+const userReducer = (state = inicialState, action: Actions): InicialStateType => {
 
     switch (action.type) {
 
@@ -63,17 +64,6 @@ const userReducer = (state = inicialState, action: any): InicialStateType => {
             return {
                 ...state,
                 usersData: action.usersData
-            }
-
-        case SET_PAGE:
-            return {
-                ...state,
-                currentPage: action.pageNum
-            }
-        case SET_CURRENT_PORTION:
-            return {
-                ...state,
-                currentPortion: action.currentPortion
             }
 
         case SET_TOTAL_USERS:
@@ -109,6 +99,10 @@ const userReducer = (state = inicialState, action: any): InicialStateType => {
     }
 }
 
+type Actions = FollowAT | UnfollowAT | SetUsersAT |
+    SetTotalUsersAT | SetIsFetchingAT | ToggleFollowingInProgressAT |
+    SetSelectedPageAT
+
 type FollowAT = { type: typeof FOLLOW, userId: number }
 export const follow = (userId: number): FollowAT => ({ type: FOLLOW, userId })
 
@@ -138,17 +132,19 @@ export const requestUsers = (page: number, pageSize: number) => async (dispath: 
     dispath(setTotalUsers(data.totalCount));
 };
 
-export const following = (id: number) => async (dispath: any) => {
+type DispatchType = Dispatch<Actions>
+
+export const following = (id: number) => async (dispath: DispatchType) => {
 
     followUnfollowFlow(dispath, usersAPI.follow.bind(usersAPI), follow, id);
 };
 
-export const unfollowing = (id: number) => async (dispath: any) => {
+export const unfollowing = (id: number) => async (dispath: DispatchType) => {
 
     followUnfollowFlow(dispath, usersAPI.unfollow.bind(usersAPI), unfollow, id);
 };
 
-export const followUnfollowFlow = async (dispath: any, apiMethod: any, actionCreator: any, id: number) => {
+export const followUnfollowFlow = async (dispath: DispatchType, apiMethod: any, actionCreator: any, id: number) => {
     dispath(toggleFollowingInProgress(true, id));
     let data = await apiMethod(id);
     if (data.resultCode === 0) {
