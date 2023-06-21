@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ProfileDataType } from '../types/types';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -12,29 +13,29 @@ export const usersAPI = {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data);
     },
 
-    follow(id) {
+    follow(id: number) {
         return instance.post(`follow/${id}`).then(response => response.data);
     },
 
-    unfollow(id) {
+    unfollow(id: number) {
         return instance.delete(`follow/${id}`).then(response => response.data);
     }
 }
 
 export const profileAPI = {
-    profile(userId) {
+    profile(userId: number) {
         return instance.get(`profile/` + userId).then(response => response.data)
     },
-    changeProfileInfo(profile) {
+    changeProfileInfo(profile: ProfileDataType) {
         return instance.put(`profile`, profile).then(response => response.data)
     },
-    getStatus(userId) {
+    getStatus(userId: number) {
         return instance.get(`profile/status/` + userId)
     },
-    updateStatus(status) {
+    updateStatus(status: string) {
         return instance.put(`profile/status`, { status })
     },
-    setPhoto(photo) {
+    setPhoto(photo: any) {
         const formData = new FormData();
         formData.append('image', photo)
 
@@ -46,7 +47,8 @@ export const authAPI = {
     auth() {
         return instance.get(`auth/me`).then(response => response.data)
     },
-    login(email, password, rememberMe = false, captcha = null) {
+    
+    login(email: string, password: string, rememberMe: boolean = false, captcha: null | string = null) {
         console.log(email, password, rememberMe, captcha)
         return instance.post(`auth/login`, { email, password, rememberMe, captcha }).then(response => response.data)
     },

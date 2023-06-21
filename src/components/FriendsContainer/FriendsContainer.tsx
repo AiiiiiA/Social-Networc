@@ -80,8 +80,9 @@ let mapStateToProps = (state: AppStateType):MapStateProps => (
     }
 )
 
-export default compose(
-    connect<>(mapStateToProps, {
+export default compose<Props>(
+    connect<MapStateProps, MapDispatchProps, AppStateType >(
+        mapStateToProps, {
         requestUsers, following, unfollowing, setSelectedPage
     }),
     withAuthRedirect
