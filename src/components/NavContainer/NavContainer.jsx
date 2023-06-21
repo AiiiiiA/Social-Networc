@@ -3,13 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getAuthId, getIsAuth } from '../../Redux/authSelectors';
 
-class NavContainer extends React.Component {
-    render() {
-        return (
-            <Nav id={this.props.id} isAuth={this.props.isAuth} />
-        )
-    }
-};
+const NavContainer = (props) => {
+
+    return (
+        <Nav id={props.id} isAuth={props.isAuth} />
+    )
+}
 
 let mapStateToProps = (state) => ({
     id: getAuthId(state),

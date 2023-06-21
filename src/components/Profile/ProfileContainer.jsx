@@ -1,11 +1,10 @@
 import Profile from './Profile';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { setProfile, setProfilePage, onChangeProfileData } from "../../Redux/userReducer";
-import { getUserStatus, updateUserStatus } from '../../Redux/profileReducer';
+import { getUserStatus, updateUserStatus, setProfile, setProfilePage, onChangeProfileData } from '../../Redux/profileReducer';
 import { withRouter } from '../../hoc/withRouter';
 import { compose } from 'redux';
-import { getProfileData } from '../../Redux/usersSelectors';
+import { getProfileData } from '../../Redux/profileSelectors';
 import { getStatus } from '../../Redux/profileSelectors';
 import { getAuthId } from '../../Redux/authSelectors';
 import { withAuthRedirect } from '../../hoc/WithAuthRedirect';

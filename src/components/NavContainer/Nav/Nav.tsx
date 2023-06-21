@@ -1,12 +1,17 @@
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import s from './Nav.module.css'
 
-const Nav = (props) => {
+type NavProps = {
+    id: string
+}
+
+const Nav: FC <NavProps> = ({id}) => {
 
     return (
         <nav className={s.nav}>
             <div className={s.navItem}>
-                <Link to={'/profile/' + props.id}>
+                <Link to={'/profile/' + id}>
                     <svg className={s.logoPicture} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                         <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>

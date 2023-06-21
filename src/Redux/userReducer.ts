@@ -1,4 +1,5 @@
-import { usersAPI, profileAPI } from '../api/api';
+import { usersAPI } from '../api/api';
+import { UsersDataType } from '../types/types';
 
 const FOLLOW = 'my-app/FOLLOW';
 const UN_FOLLOW = 'my-app/UN_FOLLOW';
@@ -6,18 +7,18 @@ const SET_USERS_DATA = 'my-app/SET_USERS_DATA';
 const SET_PAGE = 'my-app/SET_PAGE';
 const SET_TOTAL_USERS = 'my-app/SET_TOTAL_USERS';
 const TOGGLE_IS_FETCHING = 'my-app/TOGGLE_IS_FETCHING';
-const SET_PROFILE = 'my-app/SET_PROFILE';
+
 const TOGGLE_FOLLOWING_IN_PROGRESS = 'my-app/TOGGLE_FOLLOWING_IN_PROGRESS';
 const SET_CURRENT_PORTION = 'my-app/SET_CURRENT_PORTION';
-const SET_PHOTO = 'my-app/SET_PHOTO';
+
 const SET_SELECTED_PAGE = 'my-app/SET_SELECTED_PAGE';
 
+type InicialStateType = typeof inicialState
+
 let inicialState = {
-    usersData: null,
+    usersData: [] as Array<UsersDataType>,
     pageSize: 5,
-
     portionSize: 10,
-
     currentPortion: 1,
     currentPage: 1,
 
@@ -28,11 +29,10 @@ let inicialState = {
 
     totalUsers: 0,
     isFetching: true,
-    profileData: null,
-    followingInProgress: []
+    followingInProgress: [] as Array<number>
 };
 
-const userReducer = (state = inicialState, action) => {
+const userReducer = (state = inicialState, action: any): InicialStateType => {
 
     switch (action.type) {
 
@@ -86,11 +86,7 @@ const userReducer = (state = inicialState, action) => {
                 ...state,
                 isFetching: action.isFetching
             }
-        case SET_PROFILE:
-            return {
-                ...state,
-                profileData: action.profileData
-            }
+
         case TOGGLE_FOLLOWING_IN_PROGRESS:
             return {
                 ...state,
@@ -108,46 +104,33 @@ const userReducer = (state = inicialState, action) => {
                 }
             }
 
-        case SET_PHOTO:
-            return {
-                ...state,
-                profileData: { ...state.profileData, photos: action.photo }
-            }
-
         default:
             return state;
     }
 }
 
-export const follow = (userId) => ({ type: FOLLOW, userId })
-export const unfollow = (userId) => ({ type: UN_FOLLOW, userId })
-export const setUsers = (usersData) => ({ type: SET_USERS_DATA, usersData })
-export const setTotalUsers = (totalUsers) => ({ type: SET_TOTAL_USERS, totalUsers })
-export const setIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
-export const setProfile = (profileData) => ({ type: SET_PROFILE, profileData })
-export const toggleFollowingInProgress = (isFetching, id) => ({ type: TOGGLE_FOLLOWING_IN_PROGRESS, isFetching, id })
-export const setSelectedPage = (currentPage, currentPortion) => ({ type: SET_SELECTED_PAGE, currentPage, currentPortion })
-export const setPhoto = (photo) => ({ type: SET_PHOTO, photo })
+type FollowAT = { type: typeof FOLLOW, userId: number }
+export const follow = (userId: number): FollowAT => ({ type: FOLLOW, userId })
 
-export const onChangeProfileData = (profile) => async (dispatch, getState) => {
+type UnfollowAT = { type: typeof UN_FOLLOW, userId: number }
+export const unfollow = (userId: number): UnfollowAT => ({ type: UN_FOLLOW, userId })
 
-    let userID = getState().auth.id
-    let data = await profileAPI.changeProfileInfo(profile);
-    if (data.resultCode === 0) {
-        dispatch(setProfilePage(userID))
-    } else {
-        console.log('все не заебись');
-    }
-}
+type SetUsersAT = { type: typeof SET_USERS_DATA, usersData: UsersDataType }
+export const setUsers = (usersData: UsersDataType): SetUsersAT => ({ type: SET_USERS_DATA, usersData })
 
-export const uploadProfilePhoto = (photo) => async (dispatch) => {
-    let data = await usersAPI.setPhoto(photo);
-    if (data.data.resultCode === 0) {
-        dispatch(setPhoto(photo))
-    }
-}
+type SetTotalUsersAT = { type: typeof SET_TOTAL_USERS, totalUsers: number }
+export const setTotalUsers = (totalUsers: number): SetTotalUsersAT => ({ type: SET_TOTAL_USERS, totalUsers })
 
-export const requestUsers = (page, pageSize) => async (dispath) => {
+type SetIsFetchingAT = { type: typeof TOGGLE_IS_FETCHING, isFetching: boolean }
+export const setIsFetching = (isFetching: boolean): SetIsFetchingAT => ({ type: TOGGLE_IS_FETCHING, isFetching })
+
+type ToggleFollowingInProgressAT = { type: typeof TOGGLE_FOLLOWING_IN_PROGRESS, isFetching: boolean, id: number }
+export const toggleFollowingInProgress = (isFetching: boolean, id: number): ToggleFollowingInProgressAT => ({ type: TOGGLE_FOLLOWING_IN_PROGRESS, isFetching, id })
+
+type SetSelectedPageAT = { type: typeof SET_SELECTED_PAGE, currentPage: number, currentPortion: number }
+export const setSelectedPage = (currentPage: number, currentPortion: number): SetSelectedPageAT => ({ type: SET_SELECTED_PAGE, currentPage, currentPortion })
+
+export const requestUsers = (page: number, pageSize: number) => async (dispath: any) => {
     dispath(setIsFetching(true));
     let data = await usersAPI.getUsers(page, pageSize);
     dispath(setIsFetching(false));
@@ -155,28 +138,23 @@ export const requestUsers = (page, pageSize) => async (dispath) => {
     dispath(setTotalUsers(data.totalCount));
 };
 
-export const following = (id) => async (dispath) => {
+export const following = (id: number) => async (dispath: any) => {
 
     followUnfollowFlow(dispath, usersAPI.follow.bind(usersAPI), follow, id);
 };
 
-export const unfollowing = (id) => async (dispath) => {
+export const unfollowing = (id: number) => async (dispath: any) => {
 
     followUnfollowFlow(dispath, usersAPI.unfollow.bind(usersAPI), unfollow, id);
 };
 
-export const followUnfollowFlow = async (dispath, apiMethod, actionCreator, id) => {
+export const followUnfollowFlow = async (dispath: any, apiMethod: any, actionCreator: any, id: number) => {
     dispath(toggleFollowingInProgress(true, id));
     let data = await apiMethod(id);
     if (data.resultCode === 0) {
         dispath(actionCreator(id))
     }
     dispath(toggleFollowingInProgress(false, id));
-}
-
-export const setProfilePage = (userId) => async (dispatch) => {
-    let data = await profileAPI.profile(userId)
-    dispatch(setProfile(data))
 }
 
 export default userReducer;
