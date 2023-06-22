@@ -1,6 +1,6 @@
 import { reduxForm, Field } from "redux-form";
 import { required, maxLengthCreator } from '../../../utils/validators/validators';
-import { createField, Input } from '../../common/FormsControls/FormControls';
+import { Input } from '../../common/FormsControls/FormControls';
 import s from './LoginReduxForm.module.css'
 import style from '../../common/FormsControls/FormControls.module.css'
 

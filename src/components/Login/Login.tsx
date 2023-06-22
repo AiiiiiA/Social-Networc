@@ -3,9 +3,21 @@ import { connect } from "react-redux"
 import { login, getCaptchaURL } from "../../Redux/authReducer.ts"
 import { Navigate } from "react-router-dom";
 import { getIsAuth, getCaptcha } from "../../Redux/authSelectors";
+import { AppStateType } from "../../types/types";
+import React, { FC } from 'react';
 
-const Login = (props) => {
-    const onSubmit = (formData) => {
+type MapStateProps = {
+    isAuth: boolean,
+    captchaURL: string
+}
+
+type MapDispatchProps = {
+    login: (email: string, password: string, rememberMe: string, captcha: string) => void,
+    getCaptchaURL: () => void
+}
+
+const Login: FC<MapStateProps & MapDispatchProps> = (props) => {
+    const onSubmit = (formData: any) => {
         props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
@@ -20,7 +32,7 @@ const Login = (props) => {
         </div >
     )
 }
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType): MapStateToProps => ({
     isAuth: getIsAuth(state),
     captchaURL: getCaptcha(state)
 })

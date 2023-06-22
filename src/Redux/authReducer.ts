@@ -1,5 +1,6 @@
 import { authAPI, securityAPI } from "../api/api";
 import {stopSubmit} from "redux-form"
+import { ResultCodes } from "../api/api";
 
 const SET_USER_DATA = 'my-app/auth/SET_USER_DATA';
 const GET_CAPTCHA_URL = 'my-app/auth/GET_CAPTCHA_URL';
@@ -63,7 +64,7 @@ export const setCaptchaURL = (captchaURL: string): SetCaptchaURLActionType => ({
 
 export const authorization = () => async (dispatch: any) => {
     const data = await authAPI.auth();
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCodes.Success) {
         const { id, email, login } = data.data;
         dispatch(setUserData(id, email, login, true))
     }
@@ -73,7 +74,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     async (dispatch: any) => {
         const data = await authAPI.login(email, password, rememberMe, captcha);
 
-        if (data.resultCode === 0) {
+        if (data.resultCode === ResultCodes.Success) {
 
             dispatch(authorization())
 
@@ -88,7 +89,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 
 export const logout = () => async (dispatch: any) => {
     const data = await authAPI.logout();
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCodes.Success) {
         dispatch(setUserData(null, null, null, false))
     }
 }

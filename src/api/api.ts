@@ -43,17 +43,44 @@ export const profileAPI = {
     }
 }
 
+export enum ResultCodes {
+    Success = 0,
+    Error = 1
+}
+
+type AuthResponcseType = {
+    data: {
+        id: number,
+        email: string,
+        login: string
+    },
+    resultCode: ResultCodes,
+    messages: Array<string>
+}
+type LoginResponcseType = {
+    data: {
+        userId: 2
+    },
+    resultCode: ResultCodes,
+    messages: Array<string>
+}
+type LogoutResponcseType = {
+    data: any,
+    resultCode: ResultCodes,
+    messages: Array<string>
+}
+
 export const authAPI = {
     auth() {
-        return instance.get(`auth/me`).then(response => response.data)
+        return instance.get<AuthResponcseType>(`auth/me`).then(response => response.data)
     },
-    
+
     login(email: string, password: string, rememberMe: boolean = false, captcha: null | string = null) {
         console.log(email, password, rememberMe, captcha)
-        return instance.post(`auth/login`, { email, password, rememberMe, captcha }).then(response => response.data)
+        return instance.post<LoginResponcseType>(`auth/login`, { email, password, rememberMe, captcha }).then(response => response.data)
     },
     logout() {
-        return instance.delete(`auth/login`).then(response => response.data)
+        return instance.delete<LogoutResponcseType>(`auth/login`).then(response => response.data)
     }
 }
 
