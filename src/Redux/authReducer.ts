@@ -70,7 +70,7 @@ export const authorization = () => async (dispatch: any) => {
     }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha: any) =>
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string) =>
     async (dispatch: any) => {
         const data = await authAPI.login(email, password, rememberMe, captcha);
 
