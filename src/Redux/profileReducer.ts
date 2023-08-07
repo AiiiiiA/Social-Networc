@@ -1,4 +1,4 @@
-import { profileAPI } from "../api/api";
+import { profileAPI } from "../api/authAPI";
 import { PostDataType } from "../types/types";
 import { ProfileDataType, PhotoType } from "../types/types";
 

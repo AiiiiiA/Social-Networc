@@ -1,6 +1,6 @@
-import { authAPI, securityAPI } from "../api/api";
+import { authAPI, securityAPI } from "../api/authAPI";
 import {stopSubmit} from "redux-form"
-import { ResultCodes } from "../api/api";
+import { ResultCodes } from "../api/authAPI";
 
 const SET_USER_DATA = 'my-app/auth/SET_USER_DATA';
 const GET_CAPTCHA_URL = 'my-app/auth/GET_CAPTCHA_URL';
