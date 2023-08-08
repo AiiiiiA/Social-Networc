@@ -1,14 +1,9 @@
-import { profileAPI } from "../api/authAPI";
+import { Dispatch } from "redux";
+import { profileAPI } from "../api/profileAPI";
 import { PostDataType } from "../types/types";
 import { ProfileDataType, PhotoType } from "../types/types";
-
-const ADD_POST = 'my-app/profile/profile_ADD-POST';
-const DELETE_POST = 'my-app/profile_DELETE_POST';
-const SET_STATUS = 'my-app/profile_SET_STATUS';
-const SET_PHOTO = 'my-app/SET_PHOTO';
-const SET_PROFILE = 'my-app/SET_PROFILE';
-
-type InicialStateType = typeof inicialState
+import { BaseThunkType, InferActionsType } from "./reduxStore";
+import { FormAction } from "redux-form";
 
 let inicialState = {
 
@@ -24,37 +19,37 @@ let inicialState = {
     profileData: null as ProfileDataType | null
 }
 
-const profileReducer = (state = inicialState, action: any): InicialStateType => {
+const profileReducer = (state = inicialState, action: ActionsTypes): InicialStateType => {
 
     switch (action.type) {
 
-        case ADD_POST:
+        case 'my-app/profile/profile_ADD-POST':
 
             return {
                 ...state,
                 postsData: [...state.postsData, { id: state.postsData.length + 1, message: action.post, likesCount: 0 }],
             };
 
-        case DELETE_POST:
+        case 'my-app/profile_DELETE_POST':
             return {
                 ...state,
                 postsData: state.postsData.filter(p => p.id != action.postId)
             }
 
-        case SET_STATUS:
+        case 'my-app/profile_SET_STATUS':
             return {
                 ...state,
                 status: action.status
             }
-        case SET_PROFILE:
-            return {
-                ...state,
-                profileData: action.profileData
-            }
-        case SET_PHOTO:
+        case 'my-app/SET_PHOTO':
             return {
                 ...state,
                 profileData: { ...state.profileData, photos: action.photo } as ProfileDataType
+            }
+        case 'my-app/SET_PROFILE':
+            return {
+                ...state,
+                profileData: action.profileData as ProfileDataType
             }
 
         default:
@@ -63,59 +58,52 @@ const profileReducer = (state = inicialState, action: any): InicialStateType => 
     }
 };
 
-type AddPostAT = { type: typeof ADD_POST, post: string }
+export const actions = {
+    addPost: (post: string) => ({ type: 'my-app/profile/profile_ADD-POST', post } as const),
+    deletePost: (postId: number) => ({ type: 'my-app/profile_DELETE_POST', postId } as const),
+    setProfile: (profileData: ProfileDataType) => ({ type: 'my-app/SET_PROFILE', profileData } as const),
+    setPhoto: (photo: PhotoType) => ({ type: 'my-app/SET_PHOTO', photo } as const),
+    setStatus: (status: string) => ({ type: 'my-app/profile_SET_STATUS', status } as const)
+}
 
-export const addPost = (post: string): AddPostAT => ({ type: ADD_POST, post });
-
-type DeletePostAT = { type: typeof DELETE_POST, postId: number }
-
-export const deletePost = (postId: number): DeletePostAT => ({ type: DELETE_POST, postId })
-
-type SetStatusAT = { type: typeof SET_STATUS, status: string }
-
-type SetProfileAT = { type: typeof SET_PROFILE, profileData: ProfileDataType }
-export const setProfile = (profileData: ProfileDataType): SetProfileAT => ({ type: SET_PROFILE, profileData })
-
-type SetPhotoAT = { type: typeof SET_PHOTO, photo: PhotoType }
-export const setPhoto = (photo: PhotoType): SetPhotoAT => ({ type: SET_PHOTO, photo })
-
-
-export const setStatus = (status: string): SetStatusAT => ({ type: SET_STATUS, status });
-
-export const getUserStatus = (userId: number) => async (dispatch: any) => {
+export const getUserStatus = (userId: number): ThuncType => async (dispatch) => {
     let data = await profileAPI.getStatus(userId);
-    dispatch(setStatus(data.data))
+    dispatch(actions.setStatus(data.data))
 };
 
-export const updateUserStatus = (status: string) => async (dispatch: any) => {
+export const updateUserStatus = (status: string): ThuncType => async (dispatch) => {
     let data = await profileAPI.updateStatus(status);
     if (data.data.resultCode === 0) {
-        dispatch(setStatus(status))
+        dispatch(actions.setStatus(status))
     }
 };
 
-export const uploadProfilePhoto = (photo: PhotoType) => async (dispatch: any) => {
+export const uploadProfilePhoto = (photo: PhotoType): ThuncType => async (dispatch) => {
     let data = await profileAPI.setPhoto(photo);
     if (data.data.resultCode === 0) {
-        dispatch(setPhoto(photo))
+        dispatch(actions.setPhoto(photo))
     }
 }
 
-export const setProfilePage = (userId: number) => async (dispatch: any) => {
+export const setProfilePage = (userId: number): ThuncType => async (dispatch) => {
     let data = await profileAPI.profile(userId)
-    dispatch(setProfile(data))
+    dispatch(actions.setProfile(data))
 }
 
-export const onChangeProfileData = (profile: ProfileDataType) => async (dispatch: any, getState: any) => {
+export const onChangeProfileData = (profile: ProfileDataType): ThuncType => async (dispatch, getState) => {
 
     let userID = getState().auth.id
     let data = await profileAPI.changeProfileInfo(profile);
     if (data.resultCode === 0) {
-        dispatch(setProfilePage(userID))
-    } else {
-        console.log('все не заебись');
+        if (userID != null) {
+            dispatch(setProfilePage(userID))
+        }
     }
 }
 
 /* добавить кнопку удаления поста */
 export default profileReducer;
+
+type InicialStateType = typeof inicialState
+type ActionsTypes = InferActionsType<typeof actions>
+type ThuncType = BaseThunkType<ActionsTypes | FormAction>

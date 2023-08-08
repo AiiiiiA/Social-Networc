@@ -54,10 +54,6 @@ const User: FC<UserProps> = ({ user, followingInProgress, unfollowing, following
                         <div>{user.status}</div>
                     </div>
                 </div>
-                <div className={s.location}>
-                    <div>'user.country'</div>
-                    <div>'user.citi'</div>
-                </div>
             </Link>
         </div>
     )

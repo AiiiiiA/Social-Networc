@@ -12,7 +12,7 @@ export enum ResultCodes {
     Error = 1
 }
 
-type ResponseType<D = {}, RC = ResultCodes> = {
+export type ResponseType<D = {}, RC = ResultCodes> = {
     data: D
     resultCode: RC
     messages: Array<string>
@@ -34,15 +34,15 @@ type LogoutResponcseType = {
 
 export const authAPI = {
     auth() {
-        return instance.get<ResponseType<AuthResponcseData>>(`auth/me`).then(response => response.data)
+        return instance.get<ResponseType<AuthResponcseData>>(`auth/me`).then(res => res.data)
     },
 
     login(email: string, password: string, rememberMe: boolean = false, captcha: null | string = null) {
         console.log(email, password, rememberMe, captcha)
-        return instance.post<ResponseType<LoginResponcseType>>(`auth/login`, { email, password, rememberMe, captcha }).then(response => response.data)
+        return instance.post<ResponseType<LoginResponcseType>>(`auth/login`, { email, password, rememberMe, captcha }).then(res => res.data)
     },
     logout() {
-        return instance.delete<ResponseType<LogoutResponcseType>>(`auth/login`).then(response => response.data)
+        return instance.delete<ResponseType<LogoutResponcseType>>(`auth/login`).then(res => res.data)
     }
 }
 

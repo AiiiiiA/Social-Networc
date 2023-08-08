@@ -7,8 +7,12 @@ const instance = axios.create({
 
 });
 
+type CapchaResponse = {
+    url: string
+}
+
 export const securityAPI = {
     capcha() {
-        return instance.get(`security/get-captcha-url`).then(response => response.data)
+        return instance.get<CapchaResponse>(`security/get-captcha-url`).then(res => res.data)
     }
 }

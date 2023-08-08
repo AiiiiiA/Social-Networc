@@ -1,9 +1,7 @@
 import { Dispatch } from 'react';
-import { usersAPI } from '../api/authAPI';
+import { usersAPI } from '../api/usersAPI';
 import { UsersDataType } from '../types/types';
-import { InferActionsType } from './reduxStore';
-
-const SET_SELECTED_PAGE = `SET_SELECTED_PAGE`
+import { BaseThunkType, InferActionsType } from './reduxStore';
 
 type InicialStateType = typeof inicialState
 
@@ -76,7 +74,7 @@ const userReducer = (state = inicialState, action: ActionsTypes): InicialStateTy
                     : state.followingInProgress.filter(id => id != action.id)
             }
 
-        case SET_SELECTED_PAGE:
+        case `SET_SELECTED_PAGE`:
             return {
                 ...state,
                 selectedPage: {
@@ -90,22 +88,17 @@ const userReducer = (state = inicialState, action: ActionsTypes): InicialStateTy
     }
 }
 
-type ActionsTypes = InferActionsType<typeof actions>
-
 export const actions = {
-
     follow: (userId: number) => ({ type: `FOLLOW`, userId } as const),
     unfollow: (userId: number) => ({ type: `UN_FOLLOW`, userId } as const),
-    setUsers: (usersData: UsersDataType) => ({ type: `SET_USERS_DATA`, usersData } as const),
+    setUsers: (usersData: Array<UsersDataType>) => ({ type: `SET_USERS_DATA`, usersData } as const),
     setTotalUsers: (totalUsers: number) => ({ type: `SET_TOTAL_USERS`, totalUsers } as const),
     setIsFetching: (isFetching: boolean) => ({ type: `TOGGLE_IS_FETCHING`, isFetching } as const),
     toggleFollowingInProgress: (isFetching: boolean, id: number) => ({ type: `TOGGLE_FOLLOWING_IN_PROGRESS`, isFetching, id } as const),
-    
+    setSelectedPage: (currentPage: number, currentPortion: number) => ({ type: `SET_SELECTED_PAGE`, currentPage, currentPortion } as const)
 }
-type setSelectedPage = {currentPage: number, currentPortion: number}
-export const setSelectedPage = (currentPage: number, currentPortion: number) => ({ type: `SET_SELECTED_PAGE`, currentPage, currentPortion } as const)
 
-export const requestUsers = (page: number, pageSize: number) => async (dispath: any) => {
+export const requestUsers = (page: number, pageSize: number): ThuncType => async (dispath) => {
     dispath(actions.setIsFetching(true));
     let data = await usersAPI.getUsers(page, pageSize);
     dispath(actions.setIsFetching(false));
@@ -113,16 +106,11 @@ export const requestUsers = (page: number, pageSize: number) => async (dispath: 
     dispath(actions.setTotalUsers(data.totalCount));
 };
 
-type DispatchType = Dispatch<ActionsTypes>
-
-
-export const following = (id: number) => async (dispath: DispatchType) => {
-
+export const following = (id: number): ThuncType => async (dispath) => {
     followUnfollowFlow(dispath, usersAPI.follow.bind(usersAPI), actions.follow, id);
 };
 
-export const unfollowing = (id: number) => async (dispath: DispatchType) => {
-
+export const unfollowing = (id: number): ThuncType => async (dispath) => {
     followUnfollowFlow(dispath, usersAPI.unfollow.bind(usersAPI), actions.unfollow, id);
 };
 
@@ -136,3 +124,7 @@ export const followUnfollowFlow = async (dispath: DispatchType, apiMethod: any, 
 }
 
 export default userReducer;
+
+type ActionsTypes = InferActionsType<typeof actions>
+type DispatchType = Dispatch<ActionsTypes>
+type ThuncType = BaseThunkType<ActionsTypes>
