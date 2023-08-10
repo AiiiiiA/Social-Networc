@@ -98,6 +98,10 @@ export const actions = {
     setSelectedPage: (currentPage: number, currentPortion: number) => ({ type: `SET_SELECTED_PAGE`, currentPage, currentPortion } as const)
 }
 
+export const setSelectedPage = (currentPage: number, currentPortion: number): ThuncType => async (dispatch) => {
+    dispatch(actions.setSelectedPage(currentPage, currentPortion))
+}
+
 export const requestUsers = (page: number, pageSize: number): ThuncType => async (dispath) => {
     dispath(actions.setIsFetching(true));
     let data = await usersAPI.getUsers(page, pageSize);

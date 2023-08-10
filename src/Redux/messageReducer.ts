@@ -1,4 +1,4 @@
-import { InferActionsType } from "./reduxStore"
+import { BaseThunkType, InferActionsType } from "./reduxStore"
 
 let inicialState = {
 
@@ -37,9 +37,12 @@ export const actions = {
     sendMessage: (message: string) => ({ type: 'my-app/message/SEND-MESSAGE', message } as const)
 }
 
+export const sendMessage = (message: string): ThuncType => async (dispatch) => { dispatch(actions.sendMessage(message)) }
+
 export default messageReducer
 
 export type InitialStateType = typeof inicialState
 type DialogsType = { id: number, name: string }
 type MessageType = { id: number, message: string }
 type ActionsType = InferActionsType<typeof actions>
+type ThuncType = BaseThunkType<ActionsType>

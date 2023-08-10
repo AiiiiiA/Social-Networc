@@ -66,6 +66,9 @@ export const actions = {
     setStatus: (status: string) => ({ type: 'my-app/profile_SET_STATUS', status } as const)
 }
 
+export const addPost = (post: string): ThuncType => async (dispatch) => { dispatch(actions.addPost(post)) }
+export const setProfile = (profileData: ProfileDataType): ThuncType => async (dispatch) => { dispatch(actions.setProfile(profileData)) }
+
 export const getUserStatus = (userId: number): ThuncType => async (dispatch) => {
     let data = await profileAPI.getStatus(userId);
     dispatch(actions.setStatus(data.data))

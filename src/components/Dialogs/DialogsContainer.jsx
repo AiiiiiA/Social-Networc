@@ -11,7 +11,8 @@ let mapStateToProps = (state) => ({
     messagesData: getMessageData(state)
 });
 
+
 export default compose(
-    connect(mapStateToProps, sendMessage),
+    connect(mapStateToProps, {sendMessage} ),
     withAuthRedirect
 )(Dialogs);
