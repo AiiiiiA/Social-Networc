@@ -1,7 +1,7 @@
 import Profile from './Profile';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getUserStatus, updateUserStatus, setProfile, setProfilePage, onChangeProfileData } from '../../Redux/profileReducer';
+import { getUserStatus, updateUserStatus, setProfilePage, onChangeProfileData, actions } from '../../Redux/profileReducer';
 import { withRouter } from '../../hoc/withRouter';
 import { compose } from 'redux';
 import { getProfileData } from '../../Redux/profileSelectors';
@@ -34,7 +34,7 @@ let mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {
-        setProfile,
+        ...actions,
         setProfilePage,
         getUserStatus,
         updateUserStatus,

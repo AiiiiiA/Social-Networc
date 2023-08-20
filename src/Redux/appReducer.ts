@@ -1,7 +1,9 @@
 import { authorization } from './authReducer'
 import { InferActionsType } from './reduxStore'
 
-let inicialState = { initialized: false }
+let inicialState = { 
+    initialized: false
+}
 
 const appReducer = (state = inicialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -26,5 +28,5 @@ export const initializeApp = () => (dispatch: any) => {
 
 export default appReducer
 
-type InitialStateType = typeof inicialState
+export type InitialStateType = typeof inicialState
 type ActionsType = InferActionsType<typeof actions>

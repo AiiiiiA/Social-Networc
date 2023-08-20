@@ -14,7 +14,7 @@ let inicialState = {
         { id: 2, message: 'Как ты?' },
         { id: 3, message: 'Как дела?' },
         { id: 4, message: 'Что делаешь?' }
-    ] as Array<MessageType>
+    ] as Array<MessageDataType>
 }
 
 const messageReducer = (state = inicialState, action: ActionsType): InitialStateType => {
@@ -37,12 +37,10 @@ export const actions = {
     sendMessage: (message: string) => ({ type: 'my-app/message/SEND-MESSAGE', message } as const)
 }
 
-export const sendMessage = (message: string): ThuncType => async (dispatch) => { dispatch(actions.sendMessage(message)) }
-
 export default messageReducer
 
 export type InitialStateType = typeof inicialState
 type DialogsType = { id: number, name: string }
-type MessageType = { id: number, message: string }
+export type MessageDataType = { id: number, message: string }
 type ActionsType = InferActionsType<typeof actions>
 type ThuncType = BaseThunkType<ActionsType>
