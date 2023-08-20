@@ -3,20 +3,31 @@ import { actions } from '../../../Redux/profileReducer';
 import { connect } from 'react-redux';
 import { getProfileData } from '../../../Redux/profileSelectors';
 import { getPostData } from '../../../Redux/profileSelectors';
-import { AppStateType, PostDataType, ProfileDataType } from '../../../types/types';
+import { AppStateType, PhotoType, PostDataType, ProfileDataType } from '../../../types/types';
+import { FC } from 'react'
 
-type MapStateProps = {
-    postData: Array<PostDataType>,
-    profileData: ProfileDataType
-}
+const MyPostContainer: FC<MapStateProps & MapDispatchProps> = ({
+    postsData,
+    profileData,
+    addPost
+}) => (
+    <MyPosts postsData={postsData} profileData={profileData} addPost={addPost} />
+)
 
-type MaoDispatchProps = {
-    
-}
-
-let mapStateToProps = (state: AppStateType) => ({
+let mapStateToProps = (state: AppStateType): MapStateProps => ({
     postsData: getPostData(state),
     profileData: getProfileData(state)
 })
 
-export default connect(mapStateToProps, { ...actions })(MyPosts);
+let { addPost, ...othersActions } = actions
+
+export default connect(mapStateToProps, { addPost })(MyPostContainer);
+
+type MapStateProps = {
+    postsData: Array<PostDataType>,
+    profileData: ProfileDataType | null
+}
+
+type MapDispatchProps = {
+    addPost: (post: string) => void
+}

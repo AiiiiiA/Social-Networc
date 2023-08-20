@@ -38,7 +38,6 @@ export const authAPI = {
     },
 
     login(email: string, password: string, rememberMe: boolean = false, captcha: null | string = null) {
-        console.log(email, password, rememberMe, captcha)
         return instance.post<ResponseType<LoginResponcseType>>(`auth/login`, { email, password, rememberMe, captcha }).then(res => res.data)
     },
     logout() {

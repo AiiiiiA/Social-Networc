@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import { profileAPI } from "../api/profileAPI";
 import { PostDataType } from "../types/types";
 import { ProfileDataType, PhotoType } from "../types/types";
@@ -66,7 +65,7 @@ export const actions = {
     setStatus: (status: string) => ({ type: 'my-app/profile_SET_STATUS', status } as const)
 }
 
-export const getUserStatus = (userId: number): ThuncType => async (dispatch) => {
+export const getUserStatus = (userId: string): ThuncType => async (dispatch) => {
     let data = await profileAPI.getStatus(userId);
     dispatch(actions.setStatus(data.data))
 };
@@ -85,7 +84,7 @@ export const uploadProfilePhoto = (photo: PhotoType): ThuncType => async (dispat
     }
 }
 
-export const setProfilePage = (userId: number): ThuncType => async (dispatch) => {
+export const setProfilePage = (userId: string): ThuncType => async (dispatch) => {
     let data = await profileAPI.profile(userId)
     dispatch(actions.setProfile(data))
 }
