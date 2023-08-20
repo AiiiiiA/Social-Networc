@@ -1,6 +1,7 @@
-import { reduxForm, Field, reset } from "redux-form";
+import { reduxForm, Field, reset, InjectedFormProps } from "redux-form";
 import { required, maxLengthCreator } from '../../../utils/validators/validators';
 import { Textarea } from '../../common/FormsControls/FormControls';
+import { FC } from 'react';
 
 const afterSubmit = (result, dispatch) => {
     dispatch(reset('dialogMessage'))
@@ -8,8 +9,8 @@ const afterSubmit = (result, dispatch) => {
 
 const maxLegth300 = maxLengthCreator(300)
 
-const addMessageForm = (props) => (
-    <form onSubmit={props.handleSubmit}>
+const addMessageForm: FC<InjectedFormProps<MessageFormValuesType, MessageFormOwnProps> & MessageFormOwnProps> = (handleSubmit) => (
+    <form onSubmit={handleSubmit}>
         <div>
             <Field
                 component={Textarea}
@@ -24,6 +25,14 @@ const addMessageForm = (props) => (
     </form>
 )
 
-const MessageReduxForm = reduxForm({ form: 'dialogMessage', onSubmitSuccess: afterSubmit })(addMessageForm);
+const MessageReduxForm = reduxForm<MessageFormValuesType, MessageFormOwnProps>({ form: 'dialogMessage', onSubmitSuccess: afterSubmit })(addMessageForm);
 
 export default MessageReduxForm;
+
+type MessageFormValuesType = {
+    message: string
+}
+
+type MessageFormOwnProps = {
+
+}

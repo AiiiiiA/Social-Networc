@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { requestUsers, following, unfollowing, setSelectedPage } from "../../Redux/userReducer";
+import { requestUsers, following, unfollowing, actions } from "../../Redux/userReducer";
 import {
     getUsersData, getPageSize, getTotalUsers,
     getCurrentPage, getFollowingInProgress,
@@ -13,27 +13,7 @@ import { compose } from "redux";
 import { withAuthRedirect } from "../../hoc/WithAuthRedirect";
 import { UsersDataType, AppStateType } from '../../types/types'
 
-type MapStateProps = {
-    usersData: Array<UsersDataType>,
-    pageSize: number
-    totalUsers: number
-    currentPage: number
-    followingInProgress: Array<number>
-    portionSize: number
-    currentPortion: number
-    isFetching: boolean
-}
-
-type MapDispatchProps = {
-    requestUsers: (currentPage: number, pageSize: number) => void,
-    following: () => void,
-    unfollowing: () => void,
-    setSelectedPage: () => void
-}
-
-type Props = MapStateProps & MapDispatchProps
-
-const FriendsContainer: FC<Props> = ({
+const FriendsContainer: FC<MapStateProps & MapDispatchProps> = ({
     usersData,
     pageSize,
     totalUsers,
@@ -67,7 +47,7 @@ const FriendsContainer: FC<Props> = ({
     )
 }
 
-let mapStateToProps = (state: AppStateType):MapStateProps => (
+let mapStateToProps = (state: AppStateType): MapStateProps => (
     {
         usersData: getUsersData(state),
         pageSize: getPageSize(state),
@@ -80,10 +60,29 @@ let mapStateToProps = (state: AppStateType):MapStateProps => (
     }
 )
 
-export default compose<Props>(
-    connect<MapStateProps, MapDispatchProps, AppStateType >(
+export default compose<React.ComponentType>(
+    connect(
         mapStateToProps, {
-        requestUsers, following, unfollowing, setSelectedPage
+        requestUsers, following, unfollowing, ...actions
     }),
     withAuthRedirect
-)(FriendsContainer);
+)(FriendsContainer)
+
+
+type MapStateProps = {
+    usersData: Array<UsersDataType>,
+    pageSize: number
+    totalUsers: number
+    currentPage: number
+    followingInProgress: Array<number>
+    portionSize: number
+    currentPortion: number
+    isFetching: boolean
+}
+
+type MapDispatchProps = {
+    requestUsers: (currentPage: number, pageSize: number) => void,
+    following: () => void,
+    unfollowing: () => void,
+    setSelectedPage: () => void
+}

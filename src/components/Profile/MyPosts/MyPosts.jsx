@@ -21,7 +21,7 @@ const MyPosts = React.memo((props) => {
         <div className={s.postSpace}>
 
             <PostReduxForm onSubmit={onSubmit} />
-            
+
             <div className={s.postBox} >
                 <h3> Мои записи </h3>
                 <div className={s.posts}>

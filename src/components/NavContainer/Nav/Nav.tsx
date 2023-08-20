@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import s from './Nav.module.css'
 
 type NavProps = {
-    id: string
+    id: number | null
 }
 
 const Nav: FC <NavProps> = ({id}) => {

@@ -1,10 +1,14 @@
 import { compose } from "redux";
 import { withAuthRedirect } from "../../hoc/WithAuthRedirect";
 
-const News = (props) => {
+type News = {
+
+}
+
+const News = ({ }) => {
     return (
         <div>
-            ЛЕНТА
+            ЛЕНТА НОВОСТЕЙ
         </div>
     )
 }

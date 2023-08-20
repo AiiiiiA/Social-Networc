@@ -1,15 +1,17 @@
+import { MessageDataType } from '../../Redux/messageReducer';
 import s from './Dialogs.module.css';
 import Message from './Message/Message';
 import MessageReduxForm from './MessageReduxForm/MessageReduxForm'
+import React, { FC } from 'react'
 
-const Dialogs = (props) => {
+const Dialogs: FC<DialogsProps & MessageDataType> = (messagesData, sendMessage) => {
 
-    const onSubmit = (formData) => {
-        props.sendMessage(formData.message)
+    const addNewMessage = (formData: {message: string}) => {
+        sendMessage(formData.message)
     }
 
     /*    let dialogsElement = props.userData.map((d) => <Dialog key={d.id} Name={d.name} id={d.id}  avatar={d.avatar}  />); */
-    let messagesElements = props.messagesData.map((m) => <Message key={m.id} message={m.message} />);
+    let messagesElements = [messagesData].map((m) => <Message key={m.id} message={m.message} />);
 
     return (
         <div className='app-wrapper-content'>
@@ -19,7 +21,7 @@ const Dialogs = (props) => {
                 </div>
                 <div className={s.messages}>
                     {messagesElements}
-                    <MessageReduxForm onSubmit={onSubmit} />
+                    <MessageReduxForm onSubmit={addNewMessage} />
                 </div>
             </div>
         </div>
@@ -28,3 +30,8 @@ const Dialogs = (props) => {
 }
 
 export default Dialogs;
+
+type DialogsProps = {
+    messagesData: Array<MessageDataType>,
+    sendMessage: (message: string) => void
+}
