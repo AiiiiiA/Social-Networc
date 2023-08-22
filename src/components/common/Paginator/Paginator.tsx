@@ -27,6 +27,7 @@ const Paginator: FC<PaginatorProps> = ({ totalItemsCount, pageSize, currentPage,
     let rightPortionPageNumber = portionNumber * portionSize;
 
     return (
+
         <div className={s.page}>
             {portionNumber > 1
                 && <button onClick={() => { setPortionNumber(portionNumber - 1) }}>

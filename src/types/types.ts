@@ -10,12 +10,12 @@ export type PostDataType = {
 
 export type ProfileDataType = {
 
-    userId: string,
+    userId: number,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,
     contacts: {
-        gihub: string,
+        github: string,
         vk: string,
         facebook: string,
         instagram: string,

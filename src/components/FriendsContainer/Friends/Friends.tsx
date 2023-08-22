@@ -3,6 +3,7 @@ import React, { FC } from 'react'
 import User from './User/User'
 import Paginator from '../../common/Paginator/Paginator'
 import { UsersDataType } from '../../../types/types'
+import UserSearchForm from './UserSearchForm/UserSearchForm'
 
 type FriendsProps = {
     totalItemsCount: number,
@@ -14,7 +15,8 @@ type FriendsProps = {
     unfollowing: () => void,
     portionSize: number,
     currentPortion: number,
-    setSelectedPage: () => void
+    setSelectedPage: () => void,
+    requestUsers: (currentPage: number, pageSize: number, term: string) => void
 }
 
 const Friends: FC<FriendsProps> = ({
@@ -27,6 +29,7 @@ const Friends: FC<FriendsProps> = ({
     portionSize,
     currentPortion,
     setSelectedPage,
+    requestUsers,
     usersData }) => {
     return (
         <div className='app-wrapper-content'>
@@ -36,7 +39,10 @@ const Friends: FC<FriendsProps> = ({
                 <div className={s.usersTitle}>
                     <p>Пользователи</p>
                 </div>
-
+                <UserSearchForm
+                    requestUsers={requestUsers}
+                    pageSize={pageSize}
+                    currentPage={currentPage} />
                 <Paginator
                     totalItemsCount={totalItemsCount}
                     pageSize={pageSize}

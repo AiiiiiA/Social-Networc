@@ -3,14 +3,13 @@ import { usersAPI } from '../api/usersAPI';
 import { UsersDataType } from '../types/types';
 import { BaseThunkType, InferActionsType } from './reduxStore';
 
-type InicialStateType = typeof inicialState
-
 let inicialState = {
     usersData: [] as Array<UsersDataType>,
     pageSize: 5,
     portionSize: 10,
     currentPortion: 1,
     currentPage: 1,
+    filter:"",
 
     selectedPage: {
         currentPortion: 1,
@@ -83,6 +82,13 @@ const userReducer = (state = inicialState, action: ActionsTypes): InicialStateTy
                 }
             }
 
+        case `SET_FILTER`:
+            return {
+                ...state,
+                filter: action.term
+
+            }
+
         default:
             return state;
     }
@@ -95,12 +101,14 @@ export const actions = {
     setTotalUsers: (totalUsers: number) => ({ type: `SET_TOTAL_USERS`, totalUsers } as const),
     setIsFetching: (isFetching: boolean) => ({ type: `TOGGLE_IS_FETCHING`, isFetching } as const),
     toggleFollowingInProgress: (isFetching: boolean, id: number) => ({ type: `TOGGLE_FOLLOWING_IN_PROGRESS`, isFetching, id } as const),
-    setSelectedPage: (currentPage: number, currentPortion: number) => ({ type: `SET_SELECTED_PAGE`, currentPage, currentPortion } as const)
+    setSelectedPage: (currentPage: number, currentPortion: number) => ({ type: `SET_SELECTED_PAGE`, currentPage, currentPortion } as const),
+    setFilter: (term:string)=>({type: 'SET_FILTER', term} as const)
 }
 
-export const requestUsers = (page: number, pageSize: number): ThuncType => async (dispath) => {
+export const requestUsers = (page: number, pageSize: number, term: string): ThuncType => async (dispath) => {
     dispath(actions.setIsFetching(true));
-    let data = await usersAPI.getUsers(page, pageSize);
+    dispath(actions.setFilter(term))
+    let data = await usersAPI.getUsers(page, pageSize, term);
     dispath(actions.setIsFetching(false));
     dispath(actions.setUsers(data.items));
     dispath(actions.setTotalUsers(data.totalCount));
@@ -125,6 +133,7 @@ export const followUnfollowFlow = async (dispath: DispatchType, apiMethod: any, 
 
 export default userReducer;
 
+export type InicialStateType = typeof inicialState
 type ActionsTypes = InferActionsType<typeof actions>
 type DispatchType = Dispatch<ActionsTypes>
 type ThuncType = BaseThunkType<ActionsTypes>

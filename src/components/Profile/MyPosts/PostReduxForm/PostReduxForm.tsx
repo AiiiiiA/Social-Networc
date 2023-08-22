@@ -1,5 +1,5 @@
 import { Field, InjectedFormProps, reduxForm, reset } from "redux-form";
-import { required, maxLengthCreator } from '../../../../utils/validators/validators';
+import { maxLengthCreator } from '../../../../utils/validators/validators';
 import { Input } from '../../../common/FormsControls/FormControls';
 import s from '../MyPosts.module.css'
 import { FC } from 'react'

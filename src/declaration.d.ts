@@ -9,3 +9,5 @@ declare module 'axios' {
         photo?: any;
     }
 }
+
+declare module 'formik'

@@ -1,18 +1,18 @@
 import ProfileStatus from "./ProfileStatus/ProfileStatus"
 import Contact from "./Contact/Contact"
-import { ProfileDataType } from "../../../../types/types"
+import { Contacts, ProfileDataType } from "../../../../types/types"
 import { FC } from 'react'
 import s from './ProfileData.module.css'
 import { changeProfile } from "./svg"
 
 type ProfileDataProps = {
-    profileData: ProfileDataType,
+    profileData: any,
     status: string,
     updateUserStatus: (status: string) => void,
     editMode: () => void
 }
 
-const ProfileData: FC<ProfileDataProps> = ({ profileData, status, updateUserStatus, editMode }) => {
+const ProfileData: FC<ProfileDataProps> = ({ profileData, status, updateUserStatus }) => {
     return (
         <div className={s.prfInfo}>
 
@@ -37,12 +37,17 @@ const ProfileData: FC<ProfileDataProps> = ({ profileData, status, updateUserStat
             </div>
 
             <div>
-                {Object.keys(profileData.contacts).map(key => {
-                    return <Contact
-                        key={key}
-                        contactTitle={key}
-                        contactValue={profileData.contacts[key]} />
+                {Object.entries(Contact).map(contact => {
+                    let [contactName, contactValueText] = contact
+                    if (contactName) {
+                        return (
+                            <div key={contactName}>
+                                <b>{contactName}</b>: {contactValueText}
+                            </div>
+                        )
+                    }
                 })}
+
             </div>
 
         </div>

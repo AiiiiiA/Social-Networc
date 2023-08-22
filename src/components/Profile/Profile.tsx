@@ -21,7 +21,7 @@ export default Profile
 
 type ProfileProps = {
     profileData: ProfileDataType | null,
-    status: string | null,
+    status: string,
     updateUserStatus: (status: string) => void,
     onChangeProfileData: (profile: ProfileDataType) => void
 }

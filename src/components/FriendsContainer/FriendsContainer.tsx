@@ -3,7 +3,7 @@ import { requestUsers, following, unfollowing, actions } from "../../Redux/userR
 import {
     getUsersData, getPageSize, getTotalUsers,
     getCurrentPage, getFollowingInProgress,
-    getPotionSize, getCurrentPortion, getIsFetching
+    getPotionSize, getCurrentPortion, getIsFetching, getFilter
 } from "../../Redux/usersSelectors";
 import { FC } from 'react';
 import Friends from './Friends/Friends';
@@ -25,10 +25,11 @@ const FriendsContainer: FC<MapStateProps & MapDispatchProps> = ({
     following,
     unfollowing,
     setSelectedPage,
-    isFetching
+    isFetching,
+    filter
 }) => {
 
-    useEffect(() => { requestUsers(currentPage, pageSize) }, [currentPage]);
+    useEffect(() => { requestUsers(currentPage, pageSize, filter) }, [currentPage]);
 
     return (isFetching
         ? <Preloader />
@@ -43,6 +44,7 @@ const FriendsContainer: FC<MapStateProps & MapDispatchProps> = ({
             portionSize={portionSize}
             currentPortion={currentPortion}
             setSelectedPage={setSelectedPage}
+            requestUsers={requestUsers}
         />
     )
 }
@@ -56,7 +58,8 @@ let mapStateToProps = (state: AppStateType): MapStateProps => (
         followingInProgress: getFollowingInProgress(state),
         portionSize: getPotionSize(state),
         currentPortion: getCurrentPortion(state),
-        isFetching: getIsFetching(state)
+        isFetching: getIsFetching(state),
+        filter: getFilter(state)
     }
 )
 
@@ -78,10 +81,11 @@ type MapStateProps = {
     portionSize: number
     currentPortion: number
     isFetching: boolean
+    filter: string
 }
 
 type MapDispatchProps = {
-    requestUsers: (currentPage: number, pageSize: number) => void,
+    requestUsers: (currentPage: number, pageSize: number, term: string) => void,
     following: () => void,
     unfollowing: () => void,
     setSelectedPage: () => void
