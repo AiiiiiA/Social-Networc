@@ -1,0 +1,21 @@
+.prfInfo {
+    width: 100%;
+    padding-left: 5%;
+}
+
+.name {
+    font-size: 40px;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.changeProfile {
+    cursor: pointer;
+    color: #9A84A4;
+}
+
+.aboutMe {
+    margin-top: 20px;
+}

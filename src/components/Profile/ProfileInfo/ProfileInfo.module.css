@@ -12,30 +12,3 @@
     border: 3px solid #9A84A4;
     border-radius: 50%;
 }
-
-.prfInfo {
-    width: 100%;
-    padding-left: 5%;
-}
-
-.name {
-    font-size: 40px;
-    font-weight: 400;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 50px;
-}
-
-.changeProfile {
-    cursor: pointer;
-    color: #9A84A4;
-}
-
-.status {
-    cursor: pointer;
-    font-size: 24px;
-}
-
-.aboutMe {
-    margin-top: 20px;
-}

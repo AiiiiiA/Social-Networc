@@ -3,13 +3,11 @@ import { required, maxLengthCreator } from '../../../utils/validators/validators
 import { Textarea } from '../../common/FormsControls/FormControls';
 import { FC } from 'react';
 
-const afterSubmit = (result, dispatch) => {
-    dispatch(reset('dialogMessage'))
-}
+const afterSubmit = (dispatch: any) => dispatch(reset('dialogMessage'))
 
 const maxLegth300 = maxLengthCreator(300)
 
-const addMessageForm: FC<InjectedFormProps<MessageFormValuesType, MessageFormOwnProps> & MessageFormOwnProps> = (handleSubmit) => (
+const addMessageForm: FC<InjectedFormProps<MessageFormValuesType, MessageFormOwnProps> & MessageFormOwnProps> = ({ handleSubmit }) => (
     <form onSubmit={handleSubmit}>
         <div>
             <Field

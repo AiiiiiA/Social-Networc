@@ -1,4 +1,4 @@
-import {RootReducers} from '../Redux/reduxStore'
+import { RootReducers } from '../Redux/reduxStore'
 
 export type AppStateType = ReturnType<RootReducers>
 
@@ -10,15 +10,25 @@ export type PostDataType = {
 
 export type ProfileDataType = {
 
-    userId: number,
+    userId: string,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,
-    contacts: ContactsType,
-    photos: PhotoType
+    contacts: {
+        gihub: string,
+        vk: string,
+        facebook: string,
+        instagram: string,
+        twitter: string,
+        website: string,
+        youtube: string,
+        mainLink: string
+    },
+    photos: PhotoType,
+    aboutMe: string
 }
 
-export type ContactsType = {
+export type Contacts = {
     gihub: string,
     vk: string,
     facebook: string,

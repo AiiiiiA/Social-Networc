@@ -1,14 +1,15 @@
-import { reduxForm, Field } from "redux-form";
-import { required, maxLengthCreator } from '../../../../utils/validators/validators';
-import { Input, Textarea } from '../../../common/FormsControls/FormControls';
+import { reduxForm, Field, InjectedFormProps } from "redux-form"
+import { required, maxLengthCreator } from '../../../../utils/validators/validators'
+import { Input, Textarea } from '../../../common/FormsControls/FormControls'
 import s from './ChangeProfileReduxForm.module.css'
 import style from '../../../common/FormsControls//FormControls.module.css'
-
+import { FC } from 'react'
+import { ProfileDataType } from "../../../../types/types"
 
 const maxLegth30 = maxLengthCreator(30);
 
-const ChangeProfileForm = ({ handleSubmit, error, profileData }) => {
-
+const ChangeProfileForm: FC<InjectedFormProps<ProfileDataType, ChangeProfileFormOwnProps> & ChangeProfileFormOwnProps> = ({
+    handleSubmit, error, profileData }) => {
     return (
         <form onSubmit={handleSubmit} >
             <div> Имя:
@@ -49,7 +50,13 @@ const ChangeProfileForm = ({ handleSubmit, error, profileData }) => {
             <div className={s.contactsBox}>
                 Контактные данные: {Object.keys(profileData.contacts).map(key => (
                     <p className={s.contacts}>
-                        {key}: <Field component={Input} name={`contacts.${key}`} placeholder={key} validate={[maxLegth30]} />
+                        {key}:
+                        <Field
+                            component={Input}
+                            name={`contacts.${key}`}
+                            placeholder={key}
+                            validate={[maxLegth30]}
+                        />
                     </p>
                 ))}
             </div>
@@ -68,7 +75,10 @@ const ChangeProfileForm = ({ handleSubmit, error, profileData }) => {
     )
 }
 
-const ChangeProfileReduxForm = reduxForm({ form: 'changeProfile' })(ChangeProfileForm);
+const ChangeProfileReduxForm = reduxForm<ProfileDataType, ChangeProfileFormOwnProps>({ form: 'changeProfile' })(ChangeProfileForm);
 
 export default ChangeProfileReduxForm;
 
+type ChangeProfileFormOwnProps = {
+    profileData: ProfileDataType
+}

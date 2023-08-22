@@ -14,13 +14,13 @@ type SavePhotoRespons = {
 }
 
 export const profileAPI = {
-    profile(userId: number) {
+    profile(userId: string) {
         return instance.get<ProfileDataType>(`profile/` + userId).then(res => res.data)
     },
     changeProfileInfo(profile: ProfileDataType) {
         return instance.put<ResponseType>(`profile`, profile).then(res => res.data)
     },
-    getStatus(userId: number) {
+    getStatus(userId: string) {
         return instance.get<string>(`profile/status/` + userId)
     },
     updateStatus(status: string) {

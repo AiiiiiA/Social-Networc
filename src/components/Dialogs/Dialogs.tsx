@@ -1,17 +1,17 @@
-import { MessageDataType } from '../../Redux/messageReducer';
-import s from './Dialogs.module.css';
-import Message from './Message/Message';
+import { MessageDataType } from '../../Redux/messageReducer'
+import s from './Dialogs.module.css'
+import Message from './Message/Message'
 import MessageReduxForm from './MessageReduxForm/MessageReduxForm'
-import React, { FC } from 'react'
+import { FC } from 'react'
 
 const Dialogs: FC<DialogsProps & MessageDataType> = (messagesData, sendMessage) => {
 
-    const addNewMessage = (formData: {message: string}) => {
+    const addNewMessage = (formData: { message: string }) => {
         sendMessage(formData.message)
     }
 
-    /*    let dialogsElement = props.userData.map((d) => <Dialog key={d.id} Name={d.name} id={d.id}  avatar={d.avatar}  />); */
-    let messagesElements = [messagesData].map((m) => <Message key={m.id} message={m.message} />);
+    /*    let dialogsElement = props.userData.map((d) => <Dialog key={d.id} Name={d.name} id={d.id}  avatar={d.avatar}  />)   */
+    let messagesElements = [messagesData].map((m) => <Message key={m.id} message={m.message} />)
 
     return (
         <div className='app-wrapper-content'>
@@ -25,11 +25,11 @@ const Dialogs: FC<DialogsProps & MessageDataType> = (messagesData, sendMessage) 
                 </div>
             </div>
         </div>
-    );
+    )
 
 }
 
-export default Dialogs;
+export default Dialogs
 
 type DialogsProps = {
     messagesData: Array<MessageDataType>,
