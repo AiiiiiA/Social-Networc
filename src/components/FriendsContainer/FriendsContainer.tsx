@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { requestUsers, following, unfollowing, actions } from "../../Redux/userReducer";
+import { requestUsers, following, unfollowing, actions, FilterType } from "../../Redux/userReducer";
 import {
     getUsersData, getPageSize, getTotalUsers,
     getCurrentPage, getFollowingInProgress,
@@ -81,11 +81,11 @@ type MapStateProps = {
     portionSize: number
     currentPortion: number
     isFetching: boolean
-    filter: string
+    filter: FilterType
 }
 
 type MapDispatchProps = {
-    requestUsers: (currentPage: number, pageSize: number, term: string) => void,
+    requestUsers: (currentPage: number, pageSize: number,  filter: FilterType) => void,
     following: () => void,
     unfollowing: () => void,
     setSelectedPage: () => void

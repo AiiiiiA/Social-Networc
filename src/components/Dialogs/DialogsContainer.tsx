@@ -29,21 +29,3 @@ type MapStateProps = {
 type MapDispatchProps = {
     sendMessage: (message: string) => void
 }
-
-
-/* const MyPostContainer: FC<MapStateProps & MapDispatchProps> = ({
-    postsData,
-    profileData,
-    addPost
-}) => (
-    <MyPosts postsData={postsData} profileData={profileData} addPost={addPost} />
-)
-
-let mapStateToProps = (state: AppStateType): MapStateProps => ({
-    postsData: getPostData(state),
-    profileData: getProfileData(state)
-})
-
-let { addPost, ...othersActions } = actions
-
-export default connect(mapStateToProps, { addPost })(MyPostContainer); */

@@ -9,7 +9,10 @@ let inicialState = {
     portionSize: 10,
     currentPortion: 1,
     currentPage: 1,
-    filter:"",
+    filter: {
+        term: '',
+        friend:  ''
+    },
 
     selectedPage: {
         currentPortion: 1,
@@ -85,7 +88,7 @@ const userReducer = (state = inicialState, action: ActionsTypes): InicialStateTy
         case `SET_FILTER`:
             return {
                 ...state,
-                filter: action.term
+                filter: action.filter
 
             }
 
@@ -102,13 +105,13 @@ export const actions = {
     setIsFetching: (isFetching: boolean) => ({ type: `TOGGLE_IS_FETCHING`, isFetching } as const),
     toggleFollowingInProgress: (isFetching: boolean, id: number) => ({ type: `TOGGLE_FOLLOWING_IN_PROGRESS`, isFetching, id } as const),
     setSelectedPage: (currentPage: number, currentPortion: number) => ({ type: `SET_SELECTED_PAGE`, currentPage, currentPortion } as const),
-    setFilter: (term:string)=>({type: 'SET_FILTER', term} as const)
+    setFilter: (filter:FilterType) => ({ type: 'SET_FILTER', filter } as const)
 }
 
-export const requestUsers = (page: number, pageSize: number, term: string): ThuncType => async (dispath) => {
+export const requestUsers = (page: number, pageSize: number, filter:FilterType): ThuncType => async (dispath) => {
     dispath(actions.setIsFetching(true));
-    dispath(actions.setFilter(term))
-    let data = await usersAPI.getUsers(page, pageSize, term);
+    dispath(actions.setFilter(filter))
+    let data = await usersAPI.getUsers(page, pageSize, filter);
     dispath(actions.setIsFetching(false));
     dispath(actions.setUsers(data.items));
     dispath(actions.setTotalUsers(data.totalCount));
@@ -137,3 +140,4 @@ export type InicialStateType = typeof inicialState
 type ActionsTypes = InferActionsType<typeof actions>
 type DispatchType = Dispatch<ActionsTypes>
 type ThuncType = BaseThunkType<ActionsTypes>
+export type FilterType = {term: string, friend: string}

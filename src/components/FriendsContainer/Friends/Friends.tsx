@@ -4,6 +4,7 @@ import User from './User/User'
 import Paginator from '../../common/Paginator/Paginator'
 import { UsersDataType } from '../../../types/types'
 import UserSearchForm from './UserSearchForm/UserSearchForm'
+import { FilterType } from '../../../Redux/userReducer'
 
 type FriendsProps = {
     totalItemsCount: number,
@@ -16,7 +17,7 @@ type FriendsProps = {
     portionSize: number,
     currentPortion: number,
     setSelectedPage: () => void,
-    requestUsers: (currentPage: number, pageSize: number, term: string) => void
+    requestUsers: (currentPage: number, pageSize: number,  filter: FilterType) => void
 }
 
 const Friends: FC<FriendsProps> = ({

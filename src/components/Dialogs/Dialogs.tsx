@@ -8,6 +8,7 @@ const Dialogs: FC<DialogsProps & MessageDataType> = (messagesData, sendMessage) 
     console.log(sendMessage)
     /*    let dialogsElement = props.userData.map((d) => <Dialog key={d.id} Name={d.name} id={d.id}  avatar={d.avatar}  />)   */
     let messagesElements = [messagesData].map((m) => <Message key={m.id} message={m.message} />)
+
     return (
         <div className='app-wrapper-content'>
             <div className={s.messageBox}>
