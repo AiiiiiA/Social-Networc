@@ -1,4 +1,4 @@
-import { Formik } from "formik"
+import { Field, Form, Formik } from "formik"
 import { ChangeEventHandler, FC, FocusEventHandler, FormEventHandler } from 'react'
 
 type FormValues = {
@@ -6,7 +6,7 @@ type FormValues = {
 }
 
 type PropsType = {
-  
+  sendMessage: (message: string) => void
 }
 
 type FormProps = {
@@ -18,30 +18,21 @@ type FormProps = {
   isSubmitting: boolean | undefined,
 }
 
-type Errors = { term: string }
+type Errors = { message: string }
 
-const MessageForm: FC<PropsType> = ({  }) => {
+const MessageForm: FC<PropsType> = ({ sendMessage }) => {
 
-  const initialValues: FormValues = { message: '' }
+  const initialValues: FormValues = { message: ' ' }
 
-/*   const validators = (values: FormValues) => {
-    const errors: Errors = { term: '' };
-    if (values.message.length > 1000) {
-      errors.term = 'Введено слишком большое количество символов';
-    }
-    return errors;
-  } */
+  const submit = (values: FormValues,  { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
 
-  const submit = (values: FormValues, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
-    /* requestUsers(currentPage, pageSize, values.term) */
-    console.log(values)
+    sendMessage(values.message)
     setSubmitting(false)
   }
 
   return (
     <Formik
       initialValues={initialValues}
-      /* validate={validators} */
       onSubmit={submit}
     >
       {({
@@ -61,8 +52,6 @@ const MessageForm: FC<PropsType> = ({  }) => {
             onBlur={handleBlur}
             value={values.message}
           />
-
-          {errors.term}
 
           <button type="submit" disabled={isSubmitting}>
             Отправить

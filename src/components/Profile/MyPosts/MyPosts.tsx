@@ -13,7 +13,6 @@ const MyPosts: FC<MyPostProps> = ({ postsData, profileData, addPost }) => {
 
     let postsElement = postsData.map((p) =>
         <Post key={p.id} message={p.message} likesCount={p.likesCount} profileData={profileData} />)
-
     const addNewPost = (formData: PostFormValuesType) => {
         addPost(formData.post)
     }

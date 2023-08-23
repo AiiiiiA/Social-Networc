@@ -8,6 +8,8 @@ export type PostDataType = {
     likesCount: number
 }
 
+export type MessageDataType = { id: number, message: string }
+
 export type ProfileDataType = {
 
     userId: number,

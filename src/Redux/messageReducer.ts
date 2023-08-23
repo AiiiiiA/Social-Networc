@@ -1,3 +1,4 @@
+import { MessageDataType } from "../types/types"
 import { BaseThunkType, InferActionsType } from "./reduxStore"
 
 let inicialState = {
@@ -41,6 +42,5 @@ export default messageReducer
 
 export type InitialStateType = typeof inicialState
 type DialogsType = { id: number, name: string }
-export type MessageDataType = { id: number, message: string }
 type ActionsType = InferActionsType<typeof actions>
 type ThuncType = BaseThunkType<ActionsType>
