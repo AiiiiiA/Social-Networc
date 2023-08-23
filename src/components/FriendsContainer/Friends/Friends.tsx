@@ -17,7 +17,8 @@ type FriendsProps = {
     portionSize: number,
     currentPortion: number,
     setSelectedPage: () => void,
-    requestUsers: (currentPage: number, pageSize: number,  filter: FilterType) => void
+    requestUsers: (currentPage: number, pageSize: number,  filter: FilterType) => void,
+    filter: FilterType
 }
 
 const Friends: FC<FriendsProps> = ({
@@ -31,7 +32,8 @@ const Friends: FC<FriendsProps> = ({
     currentPortion,
     setSelectedPage,
     requestUsers,
-    usersData }) => {
+    usersData,
+    filter }) => {
     return (
         <div className='app-wrapper-content'>
 
@@ -43,7 +45,8 @@ const Friends: FC<FriendsProps> = ({
                 <UserSearchForm
                     requestUsers={requestUsers}
                     pageSize={pageSize}
-                    currentPage={currentPage} />
+                    currentPage={currentPage}
+                    filter= {filter} />
                 <Paginator
                     totalItemsCount={totalItemsCount}
                     pageSize={pageSize}

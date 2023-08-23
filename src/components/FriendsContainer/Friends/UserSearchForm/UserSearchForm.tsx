@@ -11,7 +11,8 @@ type FormValues = {
 type PropsType = {
   pageSize: number,
   currentPage: number,
-  requestUsers: (currentPage: number, pageSize: number, filter: FilterType) => void
+  requestUsers: (currentPage: number, pageSize: number, filter: FilterType) => void,
+  filter: FilterType
 }
 
 type FormProps = {
@@ -23,20 +24,12 @@ type FormProps = {
   isSubmitting: boolean | undefined,
 }
 
-type Errors = { term: string }
+type Errors = { term: string, friend: string }
 
-const UserSearchForm: FC<PropsType> = ({ requestUsers, currentPage, pageSize }) => {
+const UserSearchForm: FC<PropsType> = ({ requestUsers, currentPage, pageSize, filter }) => {
 
-  const initialValues: FormValues = { term: '', friend: '' }
+  const initialValues: FormValues = filter
 
-/*   const validators = (values: FormValues) => {
-    const errors: Errors = { term: '' };
-    if (values.term.length > 10) {
-      errors.term = 'Введено слишком большое количество символов';
-    }
-    return errors;
-  }
- */
   const submit = (values: FormValues, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
     console.log(values)
     requestUsers(currentPage, pageSize, values)
@@ -46,7 +39,6 @@ const UserSearchForm: FC<PropsType> = ({ requestUsers, currentPage, pageSize }) 
   return (
     <Formik
       initialValues={initialValues}
-/*       validate={validators} */
       onSubmit={submit}
     >
       {({
@@ -69,7 +61,7 @@ const UserSearchForm: FC<PropsType> = ({ requestUsers, currentPage, pageSize }) 
 
           {errors.term}
 
-          <Field name="friend" as="select">
+          <Field name="friend" as="select" values={values.friend}>
             <option value="" >Всех</option>
             <option value="true" >Подписки</option>
             <option value="false" >Не подписан</option>

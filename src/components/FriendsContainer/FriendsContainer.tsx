@@ -45,6 +45,7 @@ const FriendsContainer: FC<MapStateProps & MapDispatchProps> = ({
             currentPortion={currentPortion}
             setSelectedPage={setSelectedPage}
             requestUsers={requestUsers}
+            filter={filter}
         />
     )
 }
