@@ -12,8 +12,9 @@
 }
 
 .changeProfile {
+    width: 20px;
+    height: 20px;
     cursor: pointer;
-    color: #9A84A4;
 }
 
 .aboutMe {
